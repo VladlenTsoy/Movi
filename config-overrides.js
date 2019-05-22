@@ -11,6 +11,7 @@ module.exports = override(
         modifyVars: {
             '@primary-color': '#24BAEF',
             '@link-color': '#24BAEF',
+            '@text-secondary': 'rgba(255, 255, 255, 0.4)',
             // '@font-family': '\'Open Sans\', sans-serif',
             // '@font-family': '\'Avenir Next Cyr\', sans-serif',
             '@font-family': '\'Montserrat\', sans-serif',
