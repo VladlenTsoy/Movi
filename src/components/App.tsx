@@ -1,23 +1,22 @@
 import React from 'react';
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {Layout} from 'antd';
 import './App.less';
 import Navbar from "../layouts/navbar/Navbar";
 import FooterBlock from "../layouts/footer/Footer";
-import Banner from "./home/banner/Banner";
-import Trending from "./home/trending/Trending";
-import Movies from "./home/movies/Movies";
-import Newest from "./home/newest/Newest";
+import Home from "./home/Home";
 
 const App: React.FC = () => {
     return (
-        <Layout>
-            <Navbar/>
-            <Banner/>
-            <Trending/>
-            <Movies/>
-            <Newest/>
-            <FooterBlock/>
-        </Layout>
+        <Router>
+            <Layout>
+                <Navbar/>
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                </Switch>
+                <FooterBlock/>
+            </Layout>
+        </Router>
     );
 };
 

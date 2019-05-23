@@ -1,7 +1,6 @@
 import React from "react";
 import './Newest.less';
 import {Row, Col, Button} from "antd";
-import Trending from "../trending/Trending";
 
 const Newest: React.FC = () => {
     return <div className="newest">
@@ -16,6 +15,25 @@ const Newest: React.FC = () => {
                 <span>За месяц</span>
                 <span>За 3 месяца</span>
             </div>
+        </div>
+        <div className="contents">
+            <Row type="flex" gutter={15}>
+                <Col>
+                    <div className="episode"></div>
+                </Col>
+                <Col>
+                    <div className="episode"></div>
+                </Col>
+                <Col>
+                    <div className="episode"></div>
+                </Col>
+                <Col>
+                    <div className="episode"></div>
+                </Col>
+                <Col>
+                    <div className="episode"></div>
+                </Col>
+            </Row>
         </div>
     </div>;
 };

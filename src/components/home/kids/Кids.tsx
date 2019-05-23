@@ -1,14 +1,12 @@
 import React from "react";
-import './Trending.less';
-import {Row, Col, Button} from "antd";
+import './Kids.less';
+import {Button, Col, Row} from "antd";
 
-const Trending: React.FC = () => {
-    return <div className="trending">
-        <div className="tabs">
-            <div className="navs">
-                <span className="active">Популярные Фильмы</span>
-                <span className="slash">/</span>
-                <span>Популярные Сериалы</span>
+const Kids: React.FC = () => {
+    return <div className="kids">
+        <div className="title-block">
+            <div className="title">
+                Для Детей
             </div>
             <div className="line"/>
             <div className="sort">
@@ -20,26 +18,33 @@ const Trending: React.FC = () => {
         </div>
         <div className="contents">
             <Row type="flex" gutter={15}>
-                <Col className="top-trend-col">
+                <Col lg={8}>
                     <div className="top-trend">
                         <picture></picture>
                     </div>
                 </Col>
-                <Col className="trend-col">
+                <Col lg={4}>
                     {[1, 2].map(() =>
                         <div className="trend">
                             <picture></picture>
                         </div>
                     )}
                 </Col>
-                <Col className="trend-col">
+                <Col lg={4}>
                     {[1, 2].map(() =>
                         <div className="trend">
                             <picture></picture>
                         </div>
                     )}
                 </Col>
-                <Col className="trend-col">
+                <Col lg={4}>
+                    {[1, 2].map(() =>
+                        <div className="trend">
+                            <picture></picture>
+                        </div>
+                    )}
+                </Col>
+                <Col lg={4}>
                     {[1, 2].map(() =>
                         <div className="trend">
                             <picture></picture>
@@ -47,11 +52,8 @@ const Trending: React.FC = () => {
                     )}
                 </Col>
             </Row>
-            <div className="action">
-                <Button className="btn-for-block" type="ghost" block={true}>Посмотреть все</Button>
-            </div>
         </div>
     </div>;
 };
 
-export default Trending;
+export default Kids;
