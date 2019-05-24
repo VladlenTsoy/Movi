@@ -10,7 +10,7 @@ const NewestEpisodesBlock: React.FC = () => {
         </div>
         <div className="tv-series-of-the-day-block">
             <Row gutter={15}>
-                <QueueAnim type={['right', 'left']}>
+                <QueueAnim type={['right', 'left']} duration={300}>
                     {[
                         <Col lg={8} className="top-column" key={1}>
                             <div className="episode"> </div>
