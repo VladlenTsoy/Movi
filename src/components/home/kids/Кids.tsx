@@ -1,6 +1,6 @@
 import React from "react";
 import './Kids.less';
-import {Button, Col, Row} from "antd";
+import {Col, Row} from "antd";
 
 const Kids: React.FC = () => {
     return <div className="kids">
@@ -24,29 +24,29 @@ const Kids: React.FC = () => {
                     </div>
                 </Col>
                 <Col lg={4}>
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}
                 </Col>
                 <Col lg={4}>
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}
                 </Col>
                 <Col lg={4}>
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}
                 </Col>
                 <Col lg={4}>
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}

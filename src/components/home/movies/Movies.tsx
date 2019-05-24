@@ -1,6 +1,6 @@
 import React from "react";
 import './Movies.less';
-import {Row, Col, Button} from "antd";
+import {Row, Col} from "antd";
 
 const Movies: React.FC = () => {
     return <div className="top-movies">

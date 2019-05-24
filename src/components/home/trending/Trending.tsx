@@ -26,22 +26,22 @@ const Trending: React.FC = () => {
                     </div>
                 </Col>
                 <Col className="trend-col">
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}
                 </Col>
                 <Col className="trend-col">
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}
                 </Col>
                 <Col className="trend-col">
-                    {[1, 2].map(() =>
-                        <div className="trend">
+                    {[1, 2].map((key) =>
+                        <div className="trend" key={key}>
                             <picture></picture>
                         </div>
                     )}

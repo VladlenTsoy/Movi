@@ -17,12 +17,11 @@ const Navbar: React.FC = ({location, history}: any) => {
 
     let onDropdown = (e: any) => {
         // history.push('/franchises')
-        setDropdown(e.key === block && !dropdown || e.key !== block);
+        setDropdown((e.key === block && !dropdown) || e.key !== block);
         setBlock(e.key);
     };
 
-    let onUser = (e: any) => {
-    };
+    let onUser = (e: any) => {};
 
 
     return <Header className="header">

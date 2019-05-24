@@ -1,6 +1,6 @@
 import React from "react";
 import './Viewed.less';
-import {Row, Col, Button} from "antd";
+import {Row, Col} from "antd";
 
 const Viewed: React.FC = () => {
     return <div className="viewed">
@@ -12,8 +12,8 @@ const Viewed: React.FC = () => {
         </div>
         <div className="contents">
             <Row type="flex" gutter={15}>
-                {[1, 2, 2, 2, 2, 2, 2, 2, 2, 2].map(() =>
-                    <Col>
+                {[1, 2, 2, 2, 2, 2, 2, 2, 2, 2].map((val, key) =>
+                    <Col key={key}>
                         <div className="movie">
 
                         </div>

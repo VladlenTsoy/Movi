@@ -1,6 +1,6 @@
 import React from "react";
 import './Newest.less';
-import {Row, Col, Button} from "antd";
+import {Row, Col} from "antd";
 
 const Newest: React.FC = () => {
     return <div className="newest">
