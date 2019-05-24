@@ -33,13 +33,14 @@ const Navbar: React.FC = ({location, history}: any) => {
             </div>
             <Menu className="menu"
                   theme="dark"
+                  selectable={false}
                   mode="horizontal"
                   defaultSelectedKeys={[pathname]}
             >
-                <Menu.Item key="/">Моя</Menu.Item>
-                <Menu.Item onClick={onDropdown} key="/movies">Фильмы</Menu.Item>
-                <Menu.Item onClick={onDropdown} key="/tv">Сериалы</Menu.Item>
-                <Menu.Item onClick={onDropdown} key="/kids" className="mr-auto">Мультики</Menu.Item>
+                <Menu.Item key="/">Главная</Menu.Item>
+                <Menu.Item onClick={onDropdown} className={`${dropdown && block === '/movies'? 'active': ''}`} key="/movies">Фильмы</Menu.Item>
+                <Menu.Item onClick={onDropdown} className={`${dropdown && block === '/tv'? 'active': ''}`} key="/tv">Сериалы</Menu.Item>
+                <Menu.Item onClick={onDropdown} className={`mr-auto ${dropdown && block === '/kids'? 'active': ''}`} key="/kids">Мультики</Menu.Item>
                 <div className="search">
                     <Search
                         placeholder="Введите название фильма, сериала или имя актера"
