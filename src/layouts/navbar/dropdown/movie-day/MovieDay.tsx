@@ -1,6 +1,7 @@
 import React from "react";
 import './MovieDay.less';
 import {Button, Col, Row} from "antd";
+import PosterBlock from "../../../blocks/poster/Poster";
 
 const MovieDayBlock: React.FC<{ data: any }> = ({data}) => {
     return <Col lg={8} className="block">
@@ -8,12 +9,10 @@ const MovieDayBlock: React.FC<{ data: any }> = ({data}) => {
             Фильм Дня
         </div>
         <Row type="flex" gutter={15}>
-            <Col lg={12}>
-                <picture className="poster">
-                    <img src={data.poster} alt={data.title}/>
-                </picture>
+            <Col lg={10}>
+                <PosterBlock data={{poster: data.poster, alt: data.title}}/>
             </Col>
-            <Col lg={12}>
+            <Col lg={14}>
                 <div className="movie-of-the-day-block">
                     <span className="genres">
                         {data.genres}

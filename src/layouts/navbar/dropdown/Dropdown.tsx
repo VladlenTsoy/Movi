@@ -26,7 +26,7 @@ let movie = {
 
 let tvShow = {
     genres: 'Фантастика, Боевик, Приключения',
-    title: 'Мстители: Финал',
+    title: 'Настоящий детектив',
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquam
                         aliquid
                         amet consectetur earum enim impedit maiores molestias nisi, nulla, obcaecati
@@ -36,7 +36,7 @@ let tvShow = {
 
 let cartoon = {
     genres: 'Фантастика, Боевик, Приключения',
-    title: 'Мстители: Финал',
+    title: 'Как приручить дракона 3',
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquam
                         aliquid
                         amet consectetur earum enim impedit maiores molestias nisi, nulla, obcaecati
