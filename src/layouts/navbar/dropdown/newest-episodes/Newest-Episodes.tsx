@@ -5,7 +5,6 @@ import QueueAnim from 'rc-queue-anim';
 import EpisodeBlock from "../../../blocks/episode/Episode";
 import episode from '../../../../assets/movies/55d0c27bbdd079.89871566-340x192-c.jpg';
 
-
 const NewestEpisodesBlock: React.FC<{ kids: boolean }> = ({kids}) => {
     return <Col lg={kids ? 4 : 12} key="3">
         <div className="title-block">

@@ -4,21 +4,24 @@ import './Navbar.less';
 import {Layout, Menu, Input, Avatar} from "antd";
 import {withRouter} from 'react-router-dom';
 import DropdownBlock from "./dropdown/Dropdown";
+import {useStore} from "../../store/useStore";
 
 const {Header} = Layout;
 const {Search} = Input;
 
-const Navbar: React.FC = ({location, history}: any) => {
+const Navbar: React.FC<any> = ({location, history}: any) => {
     let {pathname} = location;
+    let {state} = useStore();
     let [dropdown, setDropdown] = useState(false);
     let [block, setBlock] = useState('');
 
+    // Toggle Dropdown click Menu.Item
     let onDropdown = (e: any) => {
-        // history.push('/franchises')
         setDropdown((e.key === block && !dropdown) || e.key !== block);
         setBlock(e.key);
     };
 
+    // Action click on user button or login
     let onUser = (e: any) => {
         if (dropdown)
             setDropdown(false);
@@ -26,6 +29,7 @@ const Navbar: React.FC = ({location, history}: any) => {
         history.push('/auth/login');
     };
 
+    // Click Homepage
     let onMain = (e: any) => {
         if (dropdown)
             setDropdown(false);
@@ -45,7 +49,6 @@ const Navbar: React.FC = ({location, history}: any) => {
                   theme="dark"
                   selectable={false}
                   mode="horizontal"
-                // defaultSelectedKeys={[pathname]}
             >
                 <Menu.Item onClick={onMain} className={pathname === '/' ? 'ant-menu-item-selected' : ''} key="/">
                     Главная
@@ -64,7 +67,8 @@ const Navbar: React.FC = ({location, history}: any) => {
                 <div className="search">
                     <Search
                         placeholder="Введите название фильма, сериала или имя актера"
-                        onSearch={value => console.log(value)}
+                        value={state.search}
+                        autoFocus={true}
                     />
                 </div>
                 <Menu.Item onClick={onUser} key="/auth/login"

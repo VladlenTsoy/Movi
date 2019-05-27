@@ -1,0 +1,63 @@
+.search-block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 7;
+  background: rgba(37, 44, 62, 0.95);
+
+  .wrap-search-input {
+    background: #131722;
+    padding: 0 50px;
+    //box-shadow: 0 5px 25px 0 #131722;
+
+    .ant-input-affix-wrapper {
+      width: 100%;
+
+      .ant-input {
+        background: none;
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 30px 15px;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bolder;
+      }
+
+      .ant-input-suffix {
+        cursor: pointer;
+
+        .anticon {
+          font-size: 18px;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .ant-tabs-bar {
+    padding: 0 50px;
+    background: #131722;
+    box-shadow: 0 5px 25px 0 #131722;
+    border: 0;
+    margin-bottom: 2rem;
+
+    .ant-tabs-tab {
+      margin-right: 1rem;
+      color: @text-secondary;
+    }
+
+    .ant-tabs-tab-active {
+      color: @primary-color;
+      font-weight: bolder;
+    }
+  }
+
+  .ant-tabs-tabpane {
+    padding: 0 50px;
+  }
+}
+
