@@ -1,8 +1,20 @@
-.banner {
+.banner-block {
   height: 550px;
-  background: url('../../../assets/rZ19Fono_o.jpg') no-repeat center;
-  background-size: cover;
+  //background: url('../../../assets/rZ19Fono_o.jpg') no-repeat center;
+  //background-size: cover;
   position: relative;
+
+  .banner-image{
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    img{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
 
   .more {
     position: absolute;
@@ -76,10 +88,11 @@
       border: 2px solid rgba(255, 255, 255, 0);
       cursor: pointer;
       opacity: 0.7;
+      width: 150px;
 
-      img {
-        height: 150px;
-      }
+      //img {
+      //  height: 150px;
+      //}
     }
 
     .movie.active {
@@ -89,7 +102,7 @@
   }
 }
 
-.banner::after {
+.banner-block::after {
   content: '';
   position: absolute;
   top: 0;
