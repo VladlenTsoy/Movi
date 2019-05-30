@@ -3,7 +3,7 @@ import './Movies.less';
 import {Row, Col} from "antd";
 
 const Movies: React.FC = () => {
-    return <div className="top-movies">
+    return <div className="top-movies layout-block">
         <div className="title-block">
             <div className="title">
                 2019 Лучшие Фильмы

@@ -1,14 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import './Trending.less';
-import {Row, Col, Button} from "antd";
+import TrendingMoviesBlock from "./blocks/movies/Movies";
+import TrendingTvShowsBlock from "./blocks/tv-shows/TvShows";
 
 const Trending: React.FC = () => {
-    return <div className="trending">
+    let [currentTabMovie, setCurrentTabMovie] = useState(0);
+
+    let changeTabs = (tab: number) =>
+        setCurrentTabMovie(tab);
+
+    return <div className="trending layout-block">
         <div className="tabs">
             <div className="navs">
-                <span className="active">Популярные Фильмы</span>
+                <span className={!currentTabMovie ? 'active' : ''}
+                      onClick={() => changeTabs(0)}>Популярные Сериалы</span>
                 <span className="slash">/</span>
-                <span>Популярные Сериалы</span>
+                <span className={currentTabMovie ? 'active' : ''}
+                      onClick={() => changeTabs(1)}>Популярные Фильмы</span>
             </div>
             <div className="line"/>
             <div className="sort">
@@ -18,39 +26,9 @@ const Trending: React.FC = () => {
                 <span>За 3 месяца</span>
             </div>
         </div>
-        <div className="contents">
-            <Row type="flex" gutter={15}>
-                <Col className="top-trend-col">
-                    <div className="top-trend">
-                        <picture></picture>
-                    </div>
-                </Col>
-                <Col className="trend-col">
-                    {[1, 2].map((key) =>
-                        <div className="trend" key={key}>
-                            <picture></picture>
-                        </div>
-                    )}
-                </Col>
-                <Col className="trend-col">
-                    {[1, 2].map((key) =>
-                        <div className="trend" key={key}>
-                            <picture></picture>
-                        </div>
-                    )}
-                </Col>
-                <Col className="trend-col">
-                    {[1, 2].map((key) =>
-                        <div className="trend" key={key}>
-                            <picture></picture>
-                        </div>
-                    )}
-                </Col>
-            </Row>
-            <div className="action">
-                <Button className="btn-for-block" type="ghost" block={true}>Посмотреть все</Button>
-            </div>
-        </div>
+        {
+            currentTabMovie ? <TrendingMoviesBlock/> : <TrendingTvShowsBlock/>
+        }
     </div>;
 };
 

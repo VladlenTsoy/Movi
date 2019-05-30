@@ -1,7 +1,9 @@
 .trending {
-  background: #121318;
+  //background: #121318;
+  position: relative;
   width: 100%;
   padding: 1rem 50px;
+  z-index: 2;
 
   .tabs {
     display: flex;
@@ -67,9 +69,11 @@
       width: 40%;
 
       .top-trend {
-        height: 315px;
-        background: #292b33;
         margin-bottom: 15px;
+
+        .episode-block {
+          padding-bottom: 58.3%;
+        }
       }
     }
 
@@ -78,8 +82,6 @@
 
       .trend {
         margin-bottom: 15px;
-        height: 150px;
-        background: #292b33;
       }
     }
   }
