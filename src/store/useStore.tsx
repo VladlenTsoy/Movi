@@ -1,9 +1,11 @@
 import React, {createContext, useReducer, useContext} from "react";
 import {defaultAppState, appAction} from "./app/reducer";
+import {defaultApiState} from "./api/reducer";
 
 const initialState = {
     // App Default State
-    app: defaultAppState
+    app: defaultAppState,
+    api: defaultApiState
 };
 
 const StoreContext = createContext(initialState);

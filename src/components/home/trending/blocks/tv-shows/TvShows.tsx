@@ -14,7 +14,7 @@ const TrendingTvShowsBlock: React.FC = () => {
                 </QueueAnim>
             </Col>
             {[1, 2, 3].map((key_col) =>
-                <Col className="trend-col">
+                <Col className="trend-col" key={key_col}>
                     <QueueAnim type={['bottom', 'top']}>
                         {[
                             [1, 2].map((key) =>
