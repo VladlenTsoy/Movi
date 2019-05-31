@@ -53,6 +53,7 @@
         width: 100%;
         display: block;
         position: relative;
+        overflow: hidden;
 
         .movie {
           display: inline-block;
@@ -60,7 +61,8 @@
           cursor: pointer;
         }
 
-        .movie:not(:last-child ) {
+        .movie:not(:nth-of-type(7) ) {
+        //.movie:not(:last-child ) {
           margin-right: 15px;
         }
 

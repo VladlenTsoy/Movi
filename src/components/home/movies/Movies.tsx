@@ -10,7 +10,6 @@ const Movies: React.FC = () => {
     let [pagination, setPagination]: any = useState({page: 0, apiPage: 0, output: 7, left: 0, cache: 0, need: 0});
     let [cacheMovie, setCacheMovie]: any = useState([]);
     let [movies, setMovies]: any = useState([]);
-    let [animate, setAnimate]: any = useState(false);
 
     // Fetch top movies on the current year
     let fetchTopMovie = async (page = 1) => {
@@ -19,14 +18,7 @@ const Movies: React.FC = () => {
 
     // Output of the top 7 movies on the current year
     let nextTopMovie = async (page = 0) => {
-        setAnimate(false);
-        setTimeout(()=> setAnimate(true), 750);
-
-        if(!animate)
-            return;
-
         let outputWith = page * 7;
-        setMovies([null, null, null, null, null, null, null]);
 
         if (pagination.left <= 7) {
             let response = await fetchTopMovie(pagination.apiPage + 1);
@@ -49,12 +41,6 @@ const Movies: React.FC = () => {
     };
 
     let prevTopMovie = (page: number) => {
-        setAnimate(false);
-        setTimeout(()=> setAnimate(true), 750);
-
-        if(!animate)
-            return;
-
         let outputWith = page * 7;
         setMovies(cacheMovie.slice().splice(outputWith, 7));
         setPagination({
@@ -85,9 +71,9 @@ const Movies: React.FC = () => {
         </div>
         <div className="contents">
             <div className="carousel">
-                <QueueAnim type={['right', 'left']} className="carousel-movies">
-                    {animate ? movies.map((movie: any, key: number): any =>
-                        <div className="movie" key={key}>
+                <QueueAnim className="carousel-movies" onEnd={(e) => console.log(e)}>
+                    {movies.map((movie: any): any =>
+                        <div className="movie" key={movie.id}>
                             <PosterBlock data={movie ?
                                 {
                                     poster: movie.poster_path,
@@ -96,7 +82,7 @@ const Movies: React.FC = () => {
                                 } : null
                             }/>
                         </div>
-                    ) : null}
+                    )}
                 </QueueAnim>
                 <div className="navigation">
                     <span className="nav-left">
