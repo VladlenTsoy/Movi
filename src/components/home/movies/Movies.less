@@ -48,6 +48,8 @@
   .contents {
     .carousel {
       position: relative;
+      margin: 0 -0.5rem;
+      min-height: 250px;
 
       .carousel-movies {
         width: 100%;
@@ -56,14 +58,14 @@
         overflow: hidden;
 
         .movie {
-          display: inline-block;
-          width: calc((100% - 90px) / 7 );
+          //display: inline-block;
+          //width: calc((100% - 90px) / 7 );
           cursor: pointer;
         }
 
-        .movie:not(:nth-of-type(7) ) {
-        //.movie:not(:last-child ) {
-          margin-right: 15px;
+        .slick-slide .movie{
+          padding: 0 0.5rem;
+        //  margin-right: 7.5px;
         }
 
       }
@@ -85,9 +87,15 @@
           }
         }
 
-        span:hover {
+        span:not(.disabled):hover {
           i {
             color: #ffffff;
+          }
+        }
+
+        span.disabled {
+          i {
+            cursor: not-allowed;
           }
         }
 
@@ -105,5 +113,10 @@
     //  height: 280px;
     //  background: #292b33;
     //}
+  }
+
+  .ant-spin{
+    min-height: 250px;
+    background: rgba(14, 13, 18, 0.8);
   }
 }

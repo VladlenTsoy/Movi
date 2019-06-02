@@ -13,7 +13,7 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
     let [loader, setLoader] = useState(true);
 
     useEffect(() => {
-        setLoader(true);
+        // setLoader(true);
         let img = new Image();
         img.onload = () => setLoader(false);
         img.onerror = () => setLoader(true);
@@ -39,7 +39,7 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
                 ]
             }
         </QueueAnim>
-        <QueueAnim type={['bottom', 'bottom']} className="titles-block">
+        <div className="titles-block">
             {
                 data && data.title ?
                     [
@@ -48,7 +48,17 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
                     ]
                     : null
             }
-        </QueueAnim>
+        </div>
+        {/*<QueueAnim type={['bottom', 'bottom']} className="titles-block">*/}
+        {/*    {*/}
+        {/*        data && data.title ?*/}
+        {/*            [*/}
+        {/*                <span className="sub-title" key="sub-title">Ужасы, 2019</span>,*/}
+        {/*                <span className="title" key="title">{data.title}</span>*/}
+        {/*            ]*/}
+        {/*            : null*/}
+        {/*    }*/}
+        {/*</QueueAnim>*/}
     </div>;
 };
 

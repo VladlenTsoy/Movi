@@ -1,58 +1,91 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './Movies.less';
-import QueueAnim from 'rc-queue-anim';
+import Slider from "react-slick";
 import PosterBlock from "../../../layouts/blocks/poster/Poster";
 import {useStore} from "../../../store/useStore";
-import {Icon} from 'antd';
+import {Icon, Spin} from 'antd';
 
 const Movies: React.FC = () => {
     let {state} = useStore();
-    let [pagination, setPagination]: any = useState({page: 0, apiPage: 0, output: 7, left: 0, cache: 0, need: 0});
-    let [cacheMovie, setCacheMovie]: any = useState([]);
+    let slidesRef = useRef(null);
+    let [loader, setLoader] = useState(true);
+    let settings = {
+        dots: false,
+        infinite: false,
+        draggable: false,
+        arrows: false,
+        speed: 500,
+        lazyLoad: true,
+        slidesToShow: 7,
+        slidesToScroll: 7,
+    };
+    let [pagination, setPagination]: any = useState({
+        page: 0,        // Count pages
+        apiPage: 0,     // Count pages api
+        output: 7,      // Count output movies
+        left: 0,        // Movies left loaded
+    });
+
+    // Current movies
     let [movies, setMovies]: any = useState([]);
 
     // Fetch top movies on the current year
-    let fetchTopMovie = async (page = 1) => {
-        return await state.api.guest.get(`/discover/movie?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=${page}`);
-    };
+    let fetchTopMovie = async (page = 1) =>
+        await state.api.guest.get(`/discover/movie?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=${page}`);
 
-    // Output of the top 7 movies on the current year
-    let nextTopMovie = async (page = 0) => {
-        let outputWith = page * 7;
 
-        if (pagination.left <= 7) {
-            let response = await fetchTopMovie(pagination.apiPage + 1);
-            setPagination({
-                ...pagination,
-                apiPage: pagination.apiPage + 1,
-                left: (pagination.apiPage + 1) * 20 - (outputWith + 7),
-                page: page
-            });
-            setCacheMovie([...cacheMovie, ...response.data.results]);
-            setMovies([...cacheMovie, ...response.data.results].slice().splice(outputWith, 7));
-        } else {
-            setMovies(cacheMovie.slice().splice(outputWith, 7));
-            setPagination({
-                ...pagination,
-                left: pagination.apiPage * 20 - (outputWith + 7),
-                page: page
-            });
-        }
-    };
-
+    // Back to 7 movies
     let prevTopMovie = (page: number) => {
-        let outputWith = page * 7;
-        setMovies(cacheMovie.slice().splice(outputWith, 7));
+        let {output, apiPage} = pagination;
+        let outputWith = page * output;
+
+        // Output movies
+        if (slidesRef.current)
+        // @ts-ignore
+            slidesRef.current.slickPrev();
+
+        // Set setting for pagination
         setPagination({
             ...pagination,
-            left: pagination.apiPage * 20 - (outputWith + 7),
+            left: apiPage * 20 - (outputWith + output),
             page: page
         });
     };
 
+    // Output of the top 7 movies on the current year
+    let nextTopMovie = async (page: number = 0) => {
+        let {left, output, apiPage} = pagination;
+        let outputWith = page * output;
+
+        if (left <= output) {
+            setLoader(true);
+            let {data} = await fetchTopMovie(apiPage + 1);
+            setPagination({
+                ...pagination,
+                apiPage: apiPage + 1,
+                left: (apiPage + 1) * 20 - (outputWith + output),
+                page: page
+            });
+            setMovies([...movies, ...data.results]);
+        } else
+            setPagination({
+                ...pagination,
+                left: apiPage * 20 - (outputWith + output),
+                page: page
+            });
+
+        if (slidesRef.current)
+        // @ts-ignore
+            slidesRef.current.slickNext();
+
+        setLoader(false);
+    };
+
     useEffect(() => {
-        nextTopMovie().then();
+        nextTopMovie(1).then();
     }, []);
+    
+    // console.log(pagination.page);
 
     return <div className="top-movies layout-block">
         <div className="title-block">
@@ -71,25 +104,40 @@ const Movies: React.FC = () => {
         </div>
         <div className="contents">
             <div className="carousel">
-                <QueueAnim className="carousel-movies" onEnd={(e) => console.log(e)}>
-                    {movies.map((movie: any): any =>
-                        <div className="movie" key={movie.id}>
-                            <PosterBlock data={movie ?
-                                {
-                                    poster: movie.poster_path,
-                                    alt: movie.title,
-                                    title: movie.title
-                                } : null
-                            }/>
-                        </div>
-                    )}
-                </QueueAnim>
+                <Spin spinning={loader}>
+                    {/*
+                    // @ts-ignore */}
+                    <Slider {...settings}
+                            ref={slidesRef}
+                            className="carousel-movies"
+                            beforeChange={(count) => console.log(0)}
+                            afterChange={(count) => console.log(1)}
+                    >
+                        {movies.map((movie: any): any =>
+                            <div className="movie" key={movie.id}>
+                                <PosterBlock data={movie ?
+                                    {
+                                        poster: movie.poster_path,
+                                        alt: movie.title,
+                                        title: movie.title
+                                    } : null
+                                }/>
+                            </div>
+                        )}
+                    </Slider>
+                </Spin>
                 <div className="navigation">
-                    <span className="nav-left">
-                        <Icon type="left" onClick={() => prevTopMovie(pagination.page - 1)}/>
+                    <span className={`nav-left ${pagination.page > 1 || 'disabled'}`}>
+                        <Icon type="left" onClick={() => {
+                            if (loader || pagination.page <= 1) return;
+                            return prevTopMovie(pagination.page - 1);
+                        }}/>
                     </span>
-                    <span className="nav-right">
-                        <Icon type="right" onClick={() => nextTopMovie(pagination.page + 1)}/>
+                    <span className={`nav-right ${!loader || 'disabled'}`}>
+                        <Icon type="right" onClick={() => {
+                            if (loader) return;
+                            return nextTopMovie(pagination.page + 1);
+                        }}/>
                     </span>
                 </div>
             </div>
