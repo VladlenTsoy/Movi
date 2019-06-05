@@ -28,6 +28,7 @@
         display: inline-flex;
         font-size: 12px;
         cursor: pointer;
+        transition: all 0.2s ease-in-out;
       }
 
       span.active {
@@ -49,7 +50,7 @@
     .carousel {
       position: relative;
       margin: 0 -0.5rem;
-      min-height: 250px;
+      min-height: 100px;
 
       .carousel-movies {
         width: 100%;
@@ -63,9 +64,9 @@
           cursor: pointer;
         }
 
-        .slick-slide .movie{
+        .slick-slide .movie {
           padding: 0 0.5rem;
-        //  margin-right: 7.5px;
+          //  margin-right: 7.5px;
         }
 
       }
@@ -94,17 +95,20 @@
         }
 
         span.disabled {
+          cursor: not-allowed;
+
           i {
-            cursor: not-allowed;
+            color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
           }
         }
 
         .nav-left {
-          left: -35px;
+          left: -30px;
         }
 
         .nav-right {
-          right: -35px;
+          right: -30px;
         }
       }
     }
@@ -115,8 +119,30 @@
     //}
   }
 
-  .ant-spin{
-    min-height: 250px;
+  .ant-spin {
+    min-height: 100px;
     background: rgba(14, 13, 18, 0.8);
+  }
+
+
+  .see-all-block {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0 0;
+
+    .see-all {
+      cursor: pointer;
+      margin-left: auto;
+      font-size: 12px;
+      color: @text-secondary;
+
+      i {
+        font-size: 10px;
+      }
+    }
+
+    .see-all:hover{
+      color: #ffffff;
+    }
   }
 }

@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
+import './Poster.less';
 import {Icon} from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import './Poster.less';
+import Moment from 'react-moment';
 
 interface Poster {
-    poster: any,
-    alt: any,
-    title?: any,
+    poster: string,
+    alt: string,
+    title?: string,
+    release?: string,
+    genre?: string,
 }
 
 const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
@@ -20,7 +23,6 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
 
         if (data)
             img.src = `https://image.tmdb.org/t/p/w185_and_h278_bestv2/${data.poster}`;
-
     }, [data]);
 
 
@@ -43,7 +45,7 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
             {
                 data && data.title ?
                     [
-                        <span className="sub-title" key="sub-title">Ужасы, 2019</span>,
+                        <span className="sub-title" key="sub-title">Ужасы, <Moment format="YYYY">{data.release}</Moment></span>,
                         <span className="title" key="title">{data.title}</span>
                     ]
                     : null

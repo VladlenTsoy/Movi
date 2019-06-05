@@ -1,4 +1,4 @@
-const {override, fixBabelImports, addLessLoader} = require('customize-cra');
+const {override, fixBabelImports, addLessLoader, addBundleVisualizer} = require('customize-cra');
 
 module.exports = override(
     fixBabelImports('import', {
@@ -17,5 +17,6 @@ module.exports = override(
             // '@font-family': '\'Avenir Next Cyr\', sans-serif',
             '@font-family': '\'Montserrat\', sans-serif',
         },
-    })
+    }),
+    addBundleVisualizer({}, true)
 );
