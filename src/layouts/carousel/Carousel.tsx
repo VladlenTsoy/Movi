@@ -22,12 +22,13 @@ interface PropsType {
     url: string,
     count: number,
     apiCount: number,
+    title: boolean,
 }
 
 let apiPage = 1;
 let left = 0;
 
-const Carousel: React.FC<PropsType> = ({url, count, apiCount}) => {
+const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true}) => {
     const {state} = useStore();
     const slidesRef = useRef(null);
     const [loader, setLoader] = useState(true);
@@ -91,8 +92,8 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount}) => {
                             {
                                 poster: elem.poster_path,
                                 alt: elem.title,
-                                title: elem.title,
-                                release: elem.release_date,
+                                title: title ? elem.title : null,
+                                release: title ? elem.release_date : null,
                             } : null
                         }/>
                     </div>

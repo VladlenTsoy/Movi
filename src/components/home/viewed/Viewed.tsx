@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import './Viewed.less';
-import {Row, Col} from "antd";
+import Carousel from "../../../layouts/carousel/Carousel";
 
 const Viewed: React.FC = () => {
+    let [url] = useState(`/discover/movie?with_genres=12&api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&primary_release_year=2019&page=`);
+
     return <div className="viewed">
         <div className="title-block">
             <div className="title">
@@ -11,15 +13,7 @@ const Viewed: React.FC = () => {
             <div className="line"/>
         </div>
         <div className="contents">
-            <Row type="flex" gutter={15}>
-                {[1, 2, 2, 2, 2, 2, 2, 2, 2, 2].map((val, key) =>
-                    <Col key={key}>
-                        <div className="movie">
-
-                        </div>
-                    </Col>
-                )}
-            </Row>
+            <Carousel url={url} count={10} apiCount={20} title={false}/>
         </div>
     </div>;
 };

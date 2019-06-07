@@ -1,8 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import './Compilation.less';
-import {Row, Col} from "antd";
+import Carousel from "../../../layouts/carousel/Carousel";
 
 const Compilation: React.FC = () => {
+    let [genre, setGenre]: any = useState(12);
+    let [url, setUrl] = useState(`/discover/movie?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`);
+
+    // Sort
+    let sortGenres = (_genre: number | null) => {
+        setGenre(_genre);
+        setUrl(`/discover/movie?${_genre ? 'with_genres=' + _genre + '&' : ''}api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`);
+    };
+
     return <div className="compilation">
         <div className="title-block">
             <div className="title">
@@ -10,40 +19,15 @@ const Compilation: React.FC = () => {
             </div>
             <div className="line"/>
             <div className="sort">
-                <span className="active">Все</span>
-                <span>Драма</span>
-                <span>Комедия</span>
-                <span>Мюзиклы</span>
-                <span>Романтика</span>
+                <span className={genre === null ? 'active' : ''} onClick={() => sortGenres(null)}>Все</span>
+                <span className={genre === 18 ? 'active' : ''} onClick={() => sortGenres(18)}>Драма</span>
+                <span className={genre === 35 ? 'active' : ''} onClick={() => sortGenres(35)}>Комедия</span>
+                <span className={genre === 10402 ? 'active' : ''} onClick={() => sortGenres(10402)}>Музыка</span>
+                <span className={genre === 10751 ? 'active' : ''} onClick={() => sortGenres(12)}>Семейные</span>
             </div>
         </div>
         <div className="contents">
-            <Row type="flex" gutter={15}>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-                <Col lg={3}>
-                    <div className="movie"></div>
-                </Col>
-            </Row>
+            <Carousel url={url} count={8} apiCount={20} title={true}/>
         </div>
     </div>;
 };
