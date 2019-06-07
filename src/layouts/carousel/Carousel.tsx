@@ -1,9 +1,22 @@
 import './Carousel.less';
 import React, {useEffect, useRef, useState} from "react";
-import {Icon, Spin} from "antd";
+import {Spin, Icon} from "antd";
 import Slider from "react-slick";
 import {useStore} from "../../store/useStore";
 import PosterBlock from "../blocks/poster/Poster";
+
+const NextArrow = ({className, onClick, loaderNext}: any) => {
+    return <div className={`${className} ${!loaderNext || 'slick-disabled'}`}
+                onClick={loaderNext ? () => null : onClick}>
+        {loaderNext ?
+            <Icon type="loading"/> :
+            <Icon type="right"/>
+        }
+    </div>;
+};
+
+const PrevArrow = ({className, onClick}: any) =>
+    <div className={className} onClick={onClick}><Icon type="left"/></div>;
 
 interface PropsType {
     url: string,
@@ -15,92 +28,62 @@ let apiPage = 1;
 let left = 0;
 
 const Carousel: React.FC<PropsType> = ({url, count, apiCount}) => {
-    let {state} = useStore();
-    let slidesRef = useRef(null);
-    let [loader, setLoader] = useState(true);
+    const {state} = useStore();
+    const slidesRef = useRef(null);
+    const [loader, setLoader] = useState(true);
+    const [loaderNext, setLoaderNext] = useState(false);
     // Current movies
-    let [movies, setMovies]: any = useState([]);
-    // Setting for carousel
-    let [page, setPage] = useState(1);
+    const [movies, setMovies]: any = useState([]);
     // Setting for sliders
-    let settings = {
+    const settings = {
         dots: false,
         infinite: false,
         draggable: false,
-        arrows: false,
+        arrows: true,
         speed: 500,
-        lazyLoad: 'progressive' as 'progressive',
+        lazyLoad: 'ondemand' as 'ondemand',
         slidesToShow: count,
         slidesToScroll: count,
-    };
-
-    let prev = (page: number) => {
-        let outputWith = page * count;
-
-        if (slidesRef.current)
-        // @ts-ignore
-            slidesRef.current.slickPrev();
-
-        // Set setting for pagination
-        left = apiPage * apiCount - (outputWith + count);
-        setPage(page);
-    };
-
-    // Output of the top 7 movies on the current year
-    let next = async (page: number = 1, sort?: boolean) => {
-        if (sort) {
-            setMovies([]);
-            await updateTopMovie(1);
-
-            if (slidesRef.current)
-            // @ts-ignore
-                slidesRef.current.slickGoTo(0);
-        } else {
-            if (left <= count)
-                await appendTopMovie(page);
-            else
-                left = (apiPage * apiCount) - (page * count);
-
-            if (slidesRef.current)
-            // @ts-ignore
-                slidesRef.current.slickNext();
-        }
-
-        setPage(page);
-        setLoader(false);
+        nextArrow: <NextArrow loaderNext={loaderNext}/>,
+        prevArrow: <PrevArrow/>,
     };
 
     // Fetch top movies on the current year
-    let appendTopMovie = async (page:number) => {
-        setLoader(true);
+    const afterChange = async (current: any) => {
+        left = (apiPage * apiCount) - current;
 
-        let {data} = await state.api.guest.get(`${url}${apiPage}`);
-        setMovies([...movies, ...data.results]);
+        if (left <= count) {
+            setLoaderNext(true);
+            apiPage++;
 
-        apiPage++;
-        left = apiPage * apiCount - (page * count);
-    };
-
-    //
-    let updateTopMovie = async (page = 1) => {
-        setLoader(true);
-        apiPage = 1;
-
-        let {data} = await state.api.guest.get(`${url}${apiPage}`);
-        setMovies(data.results);
-
-        left = apiCount - (page * count);
+            let {data} = await state.api.guest.get(`${url}${apiPage}`);
+            setMovies([...movies, ...data.results]);
+            setLoaderNext(false);
+        }
     };
 
     useEffect(() => {
-        next(1, true).then();
-    }, [url]);
+        let fetch = async () => {
+            setLoader(true);
+            //
+            let {data} = await state.api.guest.get(`${url}${apiPage = 1}`);
+
+            left = apiCount - count;
+
+            setMovies(data.results);
+            setLoader(false);
+        };
+
+        fetch().then();
+    }, [url, count, apiCount, state.api.guest]);
 
     return <div className="carousel">
-        <Spin spinning={loader}>
-            <Slider {...settings}
+        {loader ?
+            <Spin spinning={loader} key="loader"/> :
+            <Slider {...settings} key="carousel"
                     ref={slidesRef}
                     className="carousel-movies"
+                    afterChange={currentSlide => afterChange(currentSlide + 7)}
             >
                 {movies.map((elem: any): any =>
                     <div className="movie" key={elem.id}>
@@ -115,15 +98,7 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount}) => {
                     </div>
                 )}
             </Slider>
-        </Spin>
-        <div className="navigation">
-            <span className={`nav-left ${page > 1 || 'disabled'}`}>
-                <Icon type="left" onClick={() => prev(page - 1)}/>
-            </span>
-            <span className={`nav-right ${!loader || 'disabled'}`}>
-                <Icon type="right" onClick={() => next(page + 1)}/>
-            </span>
-        </div>
+        }
     </div>;
 };
 

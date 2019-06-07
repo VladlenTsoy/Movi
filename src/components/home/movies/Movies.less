@@ -1,6 +1,7 @@
 .top-movies {
   width: 100%;
   background: #0E0D12;
+  overflow: hidden;
 
   .title-block {
     display: flex;
@@ -47,81 +48,6 @@
   }
 
   .contents {
-    .carousel {
-      position: relative;
-      margin: 0 -0.5rem;
-      min-height: 100px;
-
-      .carousel-movies {
-        width: 100%;
-        display: block;
-        position: relative;
-        overflow: hidden;
-
-        .movie {
-          //display: inline-block;
-          //width: calc((100% - 90px) / 7 );
-          cursor: pointer;
-        }
-
-        .slick-slide .movie {
-          padding: 0 0.5rem;
-          //  margin-right: 7.5px;
-        }
-
-      }
-
-      .navigation {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: calc(50% - 15px);
-
-        span {
-          position: absolute;
-          cursor: pointer;
-
-          i {
-            transition: all 0.3s ease-in-out;
-            color: @text-secondary;
-            font-size: 30px;
-          }
-        }
-
-        span:not(.disabled):hover {
-          i {
-            color: #ffffff;
-          }
-        }
-
-        span.disabled {
-          cursor: not-allowed;
-
-          i {
-            color: rgba(255, 255, 255, 0.1);
-            pointer-events: none;
-          }
-        }
-
-        .nav-left {
-          left: -30px;
-        }
-
-        .nav-right {
-          right: -30px;
-        }
-      }
-    }
-
-    //.movie{
-    //  height: 280px;
-    //  background: #292b33;
-    //}
-  }
-
-  .ant-spin {
-    min-height: 100px;
-    background: rgba(14, 13, 18, 0.8);
   }
 
 
@@ -141,7 +67,7 @@
       }
     }
 
-    .see-all:hover{
+    .see-all:hover {
       color: #ffffff;
     }
   }

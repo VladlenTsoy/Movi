@@ -1,0 +1,51 @@
+.carousel {
+  position: relative;
+  margin: 0 -0.5rem;
+  min-height: 100px;
+
+  .carousel-movies {
+    width: 100%;
+    display: block;
+    position: relative;
+
+    .movie {
+      cursor: pointer;
+    }
+
+    .slick-slide .movie {
+      padding: 0 0.5rem;
+      //  margin-right: 7.5px;
+    }
+
+    .slick-prev, .slick-next {
+      font-size: 26px;
+      color: @text-secondary;
+      transition: all 0.3s ease-in-out;
+
+      &:hover:not(.slick-disabled) {
+        color: #ffffff;
+      }
+
+      &::before {
+        content: none;
+      }
+    }
+
+    .slick-disabled {
+      cursor: not-allowed;
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .ant-spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(14, 13, 18, 0.8);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+}

@@ -18,10 +18,8 @@ const App: React.FC = () => {
     let {state, dispatch} = useStore();
 
     useEffect(() => {
-        // document.addEventListener('keypress', logKey);
         document.onkeydown = keyPressForSearch;
         return () => {
-            // document.removeEventListener('keypress', logKey)
             document.onkeydown = null
         };
     }, [state.search]);
