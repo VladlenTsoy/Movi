@@ -27,7 +27,7 @@ const Compilation: React.FC = () => {
             </div>
         </div>
         <div className="contents">
-            <Carousel url={url} count={8} apiCount={20} title={true}/>
+            <Carousel url={url} count={8} apiCount={20} title={true} poster={true}/>
         </div>
     </div>;
 };

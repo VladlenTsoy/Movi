@@ -52,16 +52,34 @@
       width: 100%;
     }
   }
-}
 
-.episode-block:hover {
-  img {
-    transform: scale(1.1);
+  .loader-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    background: #292b33;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+
+    i {
+      color: @text-secondary;
+    }
   }
 
-  .titles-block {
-    .title {
-      color: @primary-color;
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+
+    .titles-block {
+      .title {
+        color: @primary-color;
+      }
     }
   }
 }

@@ -32,7 +32,7 @@ const Movies: React.FC = () => {
 
         {/* Top movies carousel */}
         <div className="contents">
-            <Carousel url={url} count={7} apiCount={20} title={true}/>
+            <Carousel url={url} count={7} apiCount={20} title={true} poster={true}/>
         </div>
         <div className="see-all-block">
             <span className="see-all">Показать все <Icon type="right"/></span>

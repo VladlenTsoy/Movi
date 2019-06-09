@@ -1,9 +1,10 @@
 import './Carousel.less';
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Spin, Icon} from "antd";
 import Slider from "react-slick";
 import {useStore} from "../../store/useStore";
 import PosterBlock from "../blocks/poster/Poster";
+import EpisodeBlock from "../blocks/episode/Episode";
 
 const NextArrow = ({className, onClick, loaderNext}: any) => {
     return <div className={`${className} ${!loaderNext || 'slick-disabled'}`}
@@ -23,14 +24,12 @@ interface PropsType {
     count: number,
     apiCount: number,
     title: boolean,
+    poster: boolean,
 }
 
-let apiPage = 1;
-let left = 0;
-
-const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true}) => {
+const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, poster = true}) => {
     const {state} = useStore();
-    const slidesRef = useRef(null);
+    const [apiPage, setApiPage] = useState(1);
     const [loader, setLoader] = useState(true);
     const [loaderNext, setLoaderNext] = useState(false);
     // Current movies
@@ -51,51 +50,62 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true}) => 
 
     // Fetch top movies on the current year
     const afterChange = async (current: any) => {
-        left = (apiPage * apiCount) - current;
-
-        if (left <= count) {
-            setLoaderNext(true);
-            apiPage++;
-
-            let {data} = await state.api.guest.get(`${url}${apiPage}`);
-            setMovies([...movies, ...data.results]);
-            setLoaderNext(false);
-        }
+        if ((apiPage * apiCount) - current <= count)
+            setApiPage(apiPage + 1);
     };
 
     useEffect(() => {
-        let fetch = async () => {
+        const append = async () => {
+            setLoaderNext(true);
+            let {data} = await state.api.guest.get(`${url}${apiPage}`);
+            setMovies([...movies, ...data.results]);
+            setLoaderNext(false);
+        };
+
+        const fetch = async () => {
             setLoader(true);
-            //
-            let {data} = await state.api.guest.get(`${url}${apiPage = 1}`);
-
-            left = apiCount - count;
-
+            let {data} = await state.api.guest.get(`${url}${1}`);
             setMovies(data.results);
             setLoader(false);
         };
 
-        fetch().then();
+        if (apiPage === 1)
+            fetch().then();
+        else
+            append().then();
+    }, [apiPage, url, count, apiCount, state.api.guest]);
+
+    useEffect(() => {
+        setApiPage(1);
     }, [url, count, apiCount, state.api.guest]);
 
     return <div className="carousel">
         {loader ?
             <Spin spinning={loader} key="loader"/> :
             <Slider {...settings} key="carousel"
-                    ref={slidesRef}
                     className="carousel-movies"
                     afterChange={currentSlide => afterChange(currentSlide + 7)}
             >
                 {movies.map((elem: any): any =>
                     <div className="movie" key={elem.id}>
-                        <PosterBlock data={elem ?
-                            {
-                                poster: elem.poster_path,
-                                alt: elem.title,
-                                title: title ? elem.title : null,
-                                release: title ? elem.release_date : null,
-                            } : null
-                        }/>
+                        {poster ?
+                            <PosterBlock data={elem ?
+                                {
+                                    poster: elem.poster_path,
+                                    alt: elem.title,
+                                    title: title ? elem.title : null,
+                                    release: title ? elem.release_date : null,
+                                } : null
+                            }/> :
+                            <EpisodeBlock data={elem ?
+                                {
+                                    poster: elem.backdrop_path,
+                                    alt: elem.title,
+                                    title: title ? elem.name : null,
+                                    release: title ? elem.release_date : null,
+                                } : null
+                            }/>
+                        }
                     </div>
                 )}
             </Slider>

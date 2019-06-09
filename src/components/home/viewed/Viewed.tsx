@@ -13,7 +13,7 @@ const Viewed: React.FC = () => {
             <div className="line"/>
         </div>
         <div className="contents">
-            <Carousel url={url} count={10} apiCount={20} title={false}/>
+            <Carousel url={url} count={10} apiCount={20} title={true} poster={true}/>
         </div>
     </div>;
 };

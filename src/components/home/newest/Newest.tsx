@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import './Newest.less';
-import {Row, Col} from "antd";
+import Carousel from "../../../layouts/carousel/Carousel";
 
 const Newest: React.FC = () => {
+    let [url] = useState(`/tv/popular?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`);
+
     return <div className="newest">
         <div className="title-block">
             <div className="title">
@@ -17,23 +19,7 @@ const Newest: React.FC = () => {
             </div>
         </div>
         <div className="contents">
-            <Row type="flex" gutter={15}>
-                <Col>
-                    <div className="episode"></div>
-                </Col>
-                <Col>
-                    <div className="episode"></div>
-                </Col>
-                <Col>
-                    <div className="episode"></div>
-                </Col>
-                <Col>
-                    <div className="episode"></div>
-                </Col>
-                <Col>
-                    <div className="episode"></div>
-                </Col>
-            </Row>
+            <Carousel url={url} count={5} apiCount={20} title={true} poster={false}/>
         </div>
     </div>;
 };
