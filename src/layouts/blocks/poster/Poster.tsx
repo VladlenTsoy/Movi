@@ -22,7 +22,7 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
         setError(false);
     };
 
-    const imageError = (e:any) => {
+    const imageError = (e: any) => {
         setLoader(false);
         setError(true);
     };
@@ -30,7 +30,7 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
     useEffect(() => {
         if (!data) return;
 
-        img.src = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2/' + data.poster;
+        img.src = data.poster;
         img.onload = imageLoad;
         img.onerror = imageError;
 
@@ -43,7 +43,7 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
         <QueueAnim>
             {!loader && data && !error ?
                 <picture key="picture">
-                    <img src={'https://image.tmdb.org/t/p/w185_and_h278_bestv2/' + data.poster} alt={data.alt}/>
+                    <img src={data.poster} alt={data.alt}/>
                 </picture> :
                 error ?
                     <div className="loader-block" key="empty">
