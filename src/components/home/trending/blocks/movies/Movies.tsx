@@ -1,15 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Row} from "antd";
 import QueueAnim from "rc-queue-anim";
 import EpisodeBlock from "../../../../../layouts/blocks/episode/Episode";
+import {useStore} from "../../../../../store/useStore";
 
 const TrendingMoviesBlock: React.FC = () => {
+    const {state} = useStore();
+    const [url] = useState(`/movie/popular?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=1`);
+    const [movies, setMovies]: any = useState([]);
+
+    useEffect(() => {
+        const fetch = async () => {
+            let {data} = await state.api.guest.get(`${url}${1}`);
+            setMovies(data.results);
+        };
+
+        fetch().then();
+    }, [url]);
+
     return <div className="contents">
         <Row type="flex" gutter={15}>
             <Col className="top-trend-col">
                 <QueueAnim type={['bottom', 'top']} className="top-trend">
                     {[
-                        <EpisodeBlock data={{image: null, alt: null}} key="episode"/>
+                        <EpisodeBlock data={movies && movies[0] ? {
+                            poster: movies[0].backdrop_path,
+                            alt: movies[0].title,
+                            title: movies[0].title,
+                            release: movies[0].release_date,
+                        } : null}/>
                     ]}
                 </QueueAnim>
             </Col>
@@ -19,7 +38,12 @@ const TrendingMoviesBlock: React.FC = () => {
                         {[
                             [1, 2].map((key) =>
                                 <div className="trend" key={`${key_col}${key}`}>
-                                    <EpisodeBlock data={{image: null, alt: null}}/>
+                                    <EpisodeBlock data={movies && movies[key_col] ? {
+                                        poster: movies[key_col].backdrop_path,
+                                        alt: movies[key_col].title,
+                                        title: movies[key_col].title,
+                                        release: movies[key_col].release_date,
+                                    } : null}/>
                                 </div>
                             )]}
                     </QueueAnim>
