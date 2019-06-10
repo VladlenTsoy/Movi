@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import './Poster.less';
 import {Icon} from 'antd';
-import QueueAnim from 'rc-queue-anim';
 import Moment from 'react-moment';
+// @ts-ignore
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 interface Poster {
     poster: string,
@@ -32,7 +33,6 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
 
         img.src = data.poster;
         img.onload = imageLoad;
-        img.onerror = imageError;
 
         return () => {
             img.onload = null;
@@ -40,20 +40,21 @@ const PosterBlock: React.FC<{ data: Poster | null }> = ({data}) => {
     }, [data, img]);
 
     return <div className="poster-block">
-        <QueueAnim>
-            {!loader && data && !error ?
-                <picture key="picture">
-                    <img src={data.poster} alt={data.alt}/>
-                </picture> :
-                error ?
-                    <div className="loader-block" key="empty">
-                        <Icon type="exclamation-circle"/>
-                    </div> :
-                    <div className="loader-block" key="loader">
-                        <Icon type="loading"/>
-                    </div>
-            }
-        </QueueAnim>
+        {!loader && data && !error ?
+            <LazyLoadImage
+                src={data.poster}
+                alt={data.alt}
+                effect="blur"
+                onError={imageError}
+                width="100%"/> :
+            error ?
+                <div className="loader-block" key="empty">
+                    <Icon type="exclamation-circle"/>
+                </div> :
+                <div className="loader-block" key="loader">
+                    <Icon type="loading"/>
+                </div>
+        }
         <div className="titles-block">
             {
                 data && data.title ?

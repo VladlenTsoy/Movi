@@ -24,7 +24,7 @@ const TrendingMoviesBlock: React.FC = () => {
                 <QueueAnim type={['bottom', 'top']} className="top-trend">
                     {[
                         <EpisodeBlock data={movies && movies[0] ? {
-                            poster: movies[0].backdrop_path,
+                            poster: `https://image.tmdb.org/t/p/w500/${movies[0].backdrop_path}`,
                             alt: movies[0].title,
                             title: movies[0].title,
                             release: movies[0].release_date,
@@ -39,7 +39,7 @@ const TrendingMoviesBlock: React.FC = () => {
                             [1, 2].map((key) =>
                                 <div className="trend" key={`${key_col}${key}`}>
                                     <EpisodeBlock data={movies && movies[key_col] ? {
-                                        poster: movies[key_col].backdrop_path,
+                                        poster: `https://image.tmdb.org/t/p/w300/${movies[key_col].backdrop_path}`,
                                         alt: movies[key_col].title,
                                         title: movies[key_col].title,
                                         release: movies[key_col].release_date,

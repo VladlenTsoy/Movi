@@ -36,7 +36,7 @@ const Kids: React.FC = () => {
                 <Col lg={8}>
                     <div className="top-trend">
                         <EpisodeBlock data={movies && movies[0] ? {
-                            poster: movies[0].backdrop_path,
+                            poster: `https://image.tmdb.org/t/p/w500/${movies[0].backdrop_path}`,
                             alt: movies[0].title,
                             title: movies[0].name,
                             release: movies[0].release_date,
@@ -47,7 +47,7 @@ const Kids: React.FC = () => {
                     {[1, 2].map((key) =>
                         <div className="trend" key={key}>
                             <EpisodeBlock data={movies && movies[key] ? {
-                                poster: movies[key].backdrop_path,
+                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
                                 alt: movies[key].title,
                                 title: movies[key].name,
                                 release: movies[key].release_date,
@@ -59,7 +59,7 @@ const Kids: React.FC = () => {
                     {[3, 4].map((key) =>
                         <div className="trend" key={key}>
                             <EpisodeBlock data={movies && movies[key] ? {
-                                poster: movies[key].backdrop_path,
+                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
                                 alt: movies[key].title,
                                 title: movies[key].name,
                                 release: movies[key].release_date,
@@ -71,7 +71,7 @@ const Kids: React.FC = () => {
                     {[5, 6].map((key) =>
                         <div className="trend" key={key}>
                             <EpisodeBlock data={movies && movies[key] ? {
-                                poster: movies[key].backdrop_path,
+                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
                                 alt: movies[key].title,
                                 title: movies[key].name,
                                 release: movies[key].release_date,
@@ -83,7 +83,7 @@ const Kids: React.FC = () => {
                     {[7, 8].map((key) =>
                         <div className="trend" key={key}>
                             <EpisodeBlock data={movies && movies[key] ? {
-                                poster: movies[key].backdrop_path,
+                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
                                 alt: movies[key].title,
                                 title: movies[key].name,
                                 release: movies[key].release_date,

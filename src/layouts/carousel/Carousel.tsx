@@ -91,7 +91,7 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, post
                         {poster ?
                             <PosterBlock data={elem ?
                                 {
-                                    poster: elem.poster_path,
+                                    poster: `https://image.tmdb.org/t/p/w154/${elem.poster_path}`,
                                     alt: elem.title,
                                     title: title ? elem.title : null,
                                     release: title ? elem.release_date : null,
@@ -99,7 +99,7 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, post
                             }/> :
                             <EpisodeBlock data={elem ?
                                 {
-                                    poster: elem.backdrop_path,
+                                    poster: `https://image.tmdb.org/t/p/w300/${elem.backdrop_path}`,
                                     alt: elem.title,
                                     title: title ? elem.name : null,
                                     release: title ? elem.release_date : null,

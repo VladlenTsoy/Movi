@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import './Episodes.less';
-import QueueAnim from "rc-queue-anim";
 import {Icon} from "antd";
+// @ts-ignore
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 const EpisodeBlock: React.FC<{ data: any }> = ({data}) => {
     const [loader, setLoader] = useState(true);
@@ -21,9 +22,8 @@ const EpisodeBlock: React.FC<{ data: any }> = ({data}) => {
     useEffect(() => {
         if (!data) return;
 
-        img.src = 'https://image.tmdb.org/t/p/w300/' + data.poster;
+        img.src = data.poster;
         img.onload = imageLoad;
-        img.onerror = imageError;
 
         return () => {
             img.onload = null;
@@ -31,20 +31,23 @@ const EpisodeBlock: React.FC<{ data: any }> = ({data}) => {
     }, [data, img]);
 
     return <div className="episode-block">
-        <QueueAnim>
-            {!loader && data && !error ?
-                <picture key="picture">
-                    <img src={'https://image.tmdb.org/t/p/w300/' + data.poster} alt={data.alt}/>
-                </picture> :
-                error ?
-                    <div className="loader-block" key="empty">
-                        <Icon type="exclamation-circle"/>
-                    </div> :
-                    <div className="loader-block" key="loader">
-                        <Icon type="loading"/>
-                    </div>
-            }
-        </QueueAnim>
+        {/*<QueueAnim>*/}
+        {!loader && data && !error ?
+            <LazyLoadImage
+                src={data.poster}
+                alt={data.alt}
+                effect="blur"
+                onError={imageError}
+                width="100%"/> :
+            error ?
+                <div className="loader-block" key="empty">
+                    <Icon type="exclamation-circle"/>
+                </div> :
+                <div className="loader-block" key="loader">
+                    <Icon type="loading"/>
+                </div>
+        }
+        {/*</QueueAnim>*/}
         <div className="titles-block">
             {
                 data && data.title ?

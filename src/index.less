@@ -1,9 +1,14 @@
 @import "assets/fonts/stylesheet.css";
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
+@import "~react-lazy-load-image-component/src/effects/blur.css";
+
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+  transition: filter 0.7s;
+}
 
 * {
-//  font-family: 'Avenir Next Cyr', sans-serif;
+  //  font-family: 'Avenir Next Cyr', sans-serif;
 }
 
 body {
@@ -27,7 +32,7 @@ code {
   margin-right: auto !important;
 }
 
-.layout-block{
+.layout-block {
   padding-left: 50px;
   padding-right: 50px;
 }
