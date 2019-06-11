@@ -6,7 +6,7 @@ import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 interface Poster {
     position?: 'landscape' | 'portrait'
-    image: {
+    image?: {
         poster: string,
         alt: string,
     }
@@ -25,7 +25,7 @@ const PosterBlock: React.FC<Poster> = ({position = 'portrait', image, info}) => 
         setError(false);
     };
 
-    const imageError = (e: any) => {
+    const imageError = () => {
         setLoader(false);
         setError(true);
     };

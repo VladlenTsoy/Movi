@@ -18,19 +18,18 @@ const App: React.FC = () => {
     let {state, dispatch} = useStore();
 
     useEffect(() => {
-        document.onkeydown = keyPressForSearch;
+        document.onkeydown =  (e: any) => {
+            if (e.keyCode === 27)
+                dispatch({type: CHANGE_SEARCH_INPUT, payload: ''});
+
+            if (e.key.length <= 1 && (!state.search || state.search === ''))
+                dispatch({type: CHANGE_SEARCH_INPUT, payload: e.key});
+        };
+
         return () => {
             document.onkeydown = null
         };
-    }, [state.search]);
-
-    let keyPressForSearch = (e: any) => {
-        if (e.keyCode === 27)
-            dispatch({type: CHANGE_SEARCH_INPUT, payload: ''});
-
-        if (e.key.length <= 1 && (!state.search || state.search === ''))
-            dispatch({type: CHANGE_SEARCH_INPUT, payload: e.key});
-    };
+    }, [state.search, dispatch]);
 
     return <Router>
         <Layout>

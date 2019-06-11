@@ -4,7 +4,6 @@ import {Spin, Icon} from "antd";
 import Slider from "react-slick";
 import {useStore} from "../../store/useStore";
 import PosterBlock from "../blocks/poster/Poster";
-import EpisodeBlock from "../blocks/episode/Episode";
 
 const NextArrow = ({className, onClick, loaderNext}: any) => {
     return <div className={`${className} ${!loaderNext || 'slick-disabled'}`}
@@ -58,7 +57,7 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, post
         const append = async () => {
             setLoaderNext(true);
             let {data} = await state.api.guest.get(`${url}${apiPage}`);
-            setMovies([...movies, ...data.results]);
+            setMovies((m:any) => [...m, ...data.results]);
             setLoaderNext(false);
         };
 
@@ -91,7 +90,7 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, post
                         <PosterBlock
                             position={poster ? 'portrait' : 'landscape'}
                             image={{
-                                poster: `https://image.tmdb.org/t/p/${poster ? 'w185': 'w300'}/${poster ? elem.poster_path : elem.backdrop_path}`,
+                                poster: `https://image.tmdb.org/t/p/${poster ? 'w185' : 'w300'}/${poster ? elem.poster_path : elem.backdrop_path}`,
                                 alt: poster ? elem.title : elem.name
                             }}
                             info={{

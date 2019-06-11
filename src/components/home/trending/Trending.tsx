@@ -13,10 +13,6 @@ const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
     const [movies, setMovies]: any = useState([]);
     const [loader, setLoader]: any = useState(false);
 
-    const showMore = () => {
-        setPage(page + 1);
-    };
-
     useEffect(() => {
         setOutput(movies.slice(0, (page * 10 + 7)));
     }, [movies, page]);
@@ -24,49 +20,50 @@ const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
     useEffect(() => {
         if (apiPage * 20 - output.length < 10)
             setApiPage(apiPage + 1);
-    }, [page]);
+    }, [apiPage, page, output.length]);
 
     useEffect(() => {
         const fetch = async () => {
             setLoader(true);
+
+            if (apiPage === 1)
+                setMovies([null, null, null, null, null, null, null]);
+
             let {data} = await state.api.guest.get(`${url}${apiPage}`);
-            setMovies([...movies, ...data.results]);
+            setMovies((m:any) => [...m, ...data.results]);
             setLoader(false);
         };
-        fetch().then();
-    }, [apiPage]);
-
-    useEffect(() => {
-        const fetch = async () => {
-            let {data} = await state.api.guest.get(`${url}${1}`);
-            setMovies(data.results);
-            setOutput(data.results.slice(0, 7));
-        };
-        fetch().then();
-    }, [url]);
+        fetch().catch();
+    }, [url, state.api.guest, apiPage]);
 
     return <div>
-        <QueueAnim type={['bottom', 'top']} className="contents">
+        <QueueAnim type={['bottom', 'top']} className="trends">
             {[
                 output.map((movie: any, key: number) =>
                     <div className="trend" key={key}>
-                        <PosterBlock
-                            position="landscape"
-                            image={{
-                                poster: `https://image.tmdb.org/t/p/${key === 0 ? 'w500' : 'w300'}/${movie.backdrop_path}`,
-                                alt: tab ? movie.title : movie.name
-                            }}
-                            info={{
-                                title: tab ? movie.title : movie.name,
-                                subTitle: ''
-                            }}
-                        />
-                    </div>
-                )
+                        {movie ?
+                            <PosterBlock
+                                position="landscape"
+                                image={{
+                                    poster: `https://image.tmdb.org/t/p/${key === 0 ? 'w500' : 'w300'}/${movie.backdrop_path}`,
+                                    alt: tab ? movie.title : movie.name
+                                }}
+                                info={{
+                                    title: tab ? movie.title : movie.name,
+                                    subTitle: ''
+                                }}
+                            /> :
+                            <PosterBlock position="landscape"/>
+                        }
+                    </div>)
             ]}
         </QueueAnim>
         <div className="action">
-            <Button className="btn-for-block" type="ghost" block={true} onClick={showMore} loading={loader} icon="plus">
+            <Button className="btn-for-block"
+                    type="ghost" block
+                    onClick={() => setPage(page + 1)}
+                    loading={loader}
+                    icon="plus">
                 Показать еще
             </Button>
         </div>
@@ -74,34 +71,47 @@ const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
 };
 
 const Trending: React.FC = () => {
-    let [currentTabMovie, setCurrentTabMovie] = useState(0);
+    let [currentTab, setCurrentTab] = useState(0);
+    let [filter, setFilter] = useState('day');
 
     let changeTabs = (tab: number) =>
-        setCurrentTabMovie(tab);
+        setCurrentTab(tab);
+
+    let changeFilter = (e: any) =>
+        setFilter(e.currentTarget.dataset.value);
+
 
     return <div className="trending layout-block">
         <div className="title-block">
             <div className="navs">
-                <span className={!currentTabMovie ? 'active' : ''}
+                <span className={!currentTab ? 'active' : ''}
                       onClick={() => changeTabs(0)}>Популярные Сериалы</span>
                 <span className="slash">/</span>
-                <span className={currentTabMovie ? 'active' : ''}
+                <span className={currentTab ? 'active' : ''}
                       onClick={() => changeTabs(1)}>Популярные Фильмы</span>
             </div>
             <div className="line"/>
             <div className="sort">
-                <span className="active">Сегодня</span>
-                <span>За неделю</span>
-                <span>За месяц</span>
-                <span>За 3 месяца</span>
+                <span data-value="day" onClick={changeFilter}
+                      className={filter === 'day' ? 'active' : ''}>Сегодня</span>
+                <span data-value="week" onClick={changeFilter}
+                      className={filter === 'week' ? 'active' : ''}>За неделю</span>
+                <span data-value="mouth" onClick={changeFilter}
+                      className={filter === 'mouth' ? 'active' : ''}>За месяц</span>
+                <span data-value="3_months" onClick={changeFilter} className={filter === '3_months' ? 'active' : ''}>За 3 месяца</span>
             </div>
         </div>
 
-        <Contents key={currentTabMovie ? "tv" : "movie"}
-                  tab={currentTabMovie}
-                  url={currentTabMovie ?
-                      '/movie/popular?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page='
-                      : '/tv/popular?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page='}/>
+        <div className="contents">
+            {currentTab ?
+                <Contents key={`tv_${filter}`}
+                          tab={currentTab}
+                          url={`/trending/movie/${filter}?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`}/> :
+                <Contents key={`movie_${filter}`}
+                          tab={currentTab}
+                          url={`/trending/tv/${filter}?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`}/>
+            }
+        </div>
     </div>;
 };
 
