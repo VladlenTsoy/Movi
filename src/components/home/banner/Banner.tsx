@@ -11,19 +11,38 @@ import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 //
 const BannerImage = ({data, slide}: any) => {
-    return <QueueAnim animConfig={{opacity: [1, 0]}} className="banner-image">
-        {data && slide ?
+    const [loader, setLoader] = useState(true);
+    const [error, setError] = useState(false);
+
+    const imageLoad = () => {
+        setLoader(false);
+        setError(false);
+    };
+
+    const imageError = () => {
+        setLoader(false);
+        setError(true);
+    };
+
+    return <div className="banner-image">
+        {data && slide && !error ?
             <LazyLoadImage
                 src={`https://image.tmdb.org/t/p/w1280/${data.backdrop_path}`}
                 alt={data.title}
                 effect="blur"
                 width="100%"
+                onError={imageError}
+                afterLoad={imageLoad}
                 delayTime={500}/> :
-            <div className="banner-loader" key="error">
+            error ?
+                <div className="banner-loader" key="empty">
+                    <Icon type="exclamation-circle"/>
+                </div> : null}
+        {loader ?
+            <div className="banner-loader" key="loader">
                 <Icon type="loading"/>
-            </div>
-        }
-    </QueueAnim>
+            </div> : null}
+    </div>
 };
 
 // Output movies by 'banner_at'
@@ -58,7 +77,7 @@ const Banner: React.FC = () => {
     }, [url, state.api.guest]);
 
     return <div className="banner-block">
-        <BannerImage data={currentMovie} slide={changeMovie}/>
+        <BannerImage data={currentMovie} slide={changeMovie} key={currentMovie ? currentMovie.id : 'banner'}/>
         <QueueAnim type={['right', 'left']} className="more">
             {changeMovie && currentMovie ? [
                 <div className="info" key="info">
