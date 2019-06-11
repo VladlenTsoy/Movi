@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import './Poster.less';
 import {Icon} from 'antd';
-import Moment from 'react-moment';
 // @ts-ignore
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
