@@ -1,44 +1,96 @@
-.episode-block {
-  padding-bottom: 57%;
-}
+.wrap-block {
 
-.poster-block {
-  padding-bottom: 150%;
-}
+  .episode-block {
+    padding-bottom: 57%;
+  }
 
-.pe-block {
-  width: 100%;
-  height: 0;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  background: @bg-empty-color;
+  .poster-block {
+    padding-bottom: 150%;
+  }
 
-  .lazy-load-image-background.blur.lazy-load-image-loaded {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  .pe-block {
+    width: 100%;
+    height: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background: @bg-empty-color;
 
-    img {
-      transition: all 0.3s ease-in-out;
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
+    .lazy-load-image-background.blur.lazy-load-image-loaded {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      img {
+        transition: all 0.3s ease-in-out;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .titles-block {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: 30% 0.5rem 0;
+      background-image: linear-gradient(180deg, #89f7fe00 40%, rgba(18, 19, 24, 0.8) 100%);
+
+      .sub-title {
+        display: inline-block;
+        font-size: 10px;
+        width: 100%;
+      }
+
+      .title {
+        transition: all 0.3s ease-in-out;
+        display: inline-block;
+        font-weight: bolder;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .loader-block {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+
+      i {
+        color: @text-secondary;
+      }
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.03);
+        pointer-events: none;
+      }
+
+      .titles-block {
+        .title {
+          color: @primary-color;
+        }
+      }
     }
   }
 
   .titles-block {
-    position: absolute;
     cursor: pointer;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 3;
     color: #ffffff;
-    padding: 30% 0.5rem 0;
-    background-image: linear-gradient(180deg, #89f7fe00 40%, rgba(18, 19, 24, 0.8) 100%);
+    margin-top: 0.5rem;
 
     .sub-title {
       display: inline-block;
@@ -53,36 +105,6 @@
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-  }
-
-  .loader-block {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-
-    i {
-      color: @text-secondary;
-    }
-  }
-
-  &:hover {
-    img {
-      transform: scale(1.03);
-      pointer-events: none;
-    }
-
-    .titles-block {
-      .title {
-        color: @primary-color;
-      }
     }
   }
 }

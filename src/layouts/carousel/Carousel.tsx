@@ -1,6 +1,6 @@
 import './Carousel.less';
 import React, {useEffect, useState} from "react";
-import {Spin, Icon} from "antd";
+import {Icon} from "antd";
 import Slider from "react-slick";
 import {useStore} from "../../store/useStore";
 import PosterBlock from "../blocks/poster/Poster";
@@ -18,18 +18,23 @@ const NextArrow = ({className, onClick, loaderNext}: any) => {
 const PrevArrow = ({className, onClick}: any) =>
     <div className={className} onClick={onClick}><Icon type="left"/></div>;
 
+
+const SliderBlock = () => {
+
+};
+
 interface PropsType {
     url: string,
     count: number,
     apiCount: number,
     title: boolean,
     poster: boolean,
+    season?: boolean,
 }
 
-const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, poster = true}) => {
+const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, poster = true, season = false}) => {
     const {state} = useStore();
     const [apiPage, setApiPage] = useState(1);
-    const [loader, setLoader] = useState(true);
     const [loaderNext, setLoaderNext] = useState(false);
     // Current movies
     const [movies, setMovies]: any = useState([]);
@@ -54,54 +59,49 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, post
     };
 
     useEffect(() => {
-        const append = async () => {
+        const fetch = async () => {
             setLoaderNext(true);
+            apiPage !== 1 || setMovies(Array(count).fill(null));
+
             let {data} = await state.api.guest.get(`${url}${apiPage}`);
-            setMovies((m:any) => [...m, ...data.results]);
+
+            apiPage === 1 ? setMovies(data[season ? 'episodes' : 'results']) :
+                setMovies((m: any) => [...m, ...data[season ? 'episodes' : 'results']]);
+
             setLoaderNext(false);
         };
 
-        const fetch = async () => {
-            setLoader(true);
-            let {data} = await state.api.guest.get(`${url}${1}`);
-            setMovies(data.results);
-            setLoader(false);
-        };
-
-        if (apiPage === 1)
-            fetch().then();
-        else
-            append().then();
-    }, [apiPage, url, count, apiCount, state.api.guest]);
+        fetch().catch();
+    }, [apiPage, url, count, season, apiCount, state.api.guest]);
 
     useEffect(() => {
         setApiPage(1);
     }, [url, count, apiCount, state.api.guest]);
 
     return <div className="carousel">
-        {loader ?
-            <Spin spinning={loader} key="loader"/> :
-            <Slider {...settings} key="carousel"
-                    className="carousel-movies"
-                    afterChange={currentSlide => afterChange(currentSlide + 7)}
-            >
-                {movies.map((elem: any): any =>
-                    <div className="movie" key={elem.id}>
-                        <PosterBlock
-                            position={poster ? 'portrait' : 'landscape'}
-                            image={{
-                                poster: `https://image.tmdb.org/t/p/${poster ? 'w185' : 'w300'}/${poster ? elem.poster_path : elem.backdrop_path}`,
-                                alt: poster ? elem.title : elem.name
-                            }}
-                            info={{
-                                title: poster ? elem.title : elem.name,
-                                subTitle: '',
-                            }}
-                        />
-                    </div>
-                )}
-            </Slider>
-        }
+        <Slider {...settings} key="carousel"
+                className="carousel-movies"
+                afterChange={currentSlide => afterChange(currentSlide + 7)}
+        >
+            {movies.map((elem: any, key: number): any =>
+                <div className="movie" key={key}>
+                    <PosterBlock
+                        position={poster ? 'portrait' : 'landscape'}
+                        {...elem ?
+                            {
+                                image: {
+                                    poster: `https://image.tmdb.org/t/p/${poster ? 'w185' : 'w300'}/${poster ? elem.poster_path : season ? elem.still_path : elem.backdrop_path}`,
+                                    alt: poster ? elem.title : elem.name
+                                },
+                                info: {
+                                    title: poster ? elem.title : elem.name,
+                                    subTitle: '',
+                                }
+                            } : null}
+                    />
+                </div>
+            )}
+        </Slider>
     </div>;
 };
 

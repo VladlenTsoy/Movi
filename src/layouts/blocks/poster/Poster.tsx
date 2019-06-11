@@ -4,16 +4,26 @@ import {Icon} from 'antd';
 // @ts-ignore
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
+interface Info {
+    outside?: boolean,
+    title: string,
+    subTitle?: string,
+}
+
+const TitleBlock: React.FC<Info> = ({subTitle, title}) => {
+    return <div className="titles-block">
+        {subTitle || <span className="sub-title" key="sub-title">{subTitle}</span>}
+        <span className="title" key="title">{title}</span>
+    </div>
+};
+
 interface Poster {
     position?: 'landscape' | 'portrait'
     image?: {
         poster: string,
         alt: string,
     }
-    info?: {
-        title: string,
-        subTitle?: string,
-    }
+    info?: Info
 }
 
 const PosterBlock: React.FC<Poster> = ({position = 'portrait', image, info}) => {
@@ -30,34 +40,30 @@ const PosterBlock: React.FC<Poster> = ({position = 'portrait', image, info}) => 
         setError(true);
     };
 
-    return <div className={`${position === 'portrait' ? 'poster-block' : 'episode-block'} pe-block`}>
-        {image && !error ?
-            <LazyLoadImage
-                src={image.poster}
-                alt={image.alt}
-                effect="blur"
-                onError={imageError}
-                afterLoad={imageLoad}
-                width="100%"/> :
-            error ?
-                <div className="loader-block" key="empty">
-                    <Icon type="exclamation-circle"/>
+    return <div className="wrap-block">
+        <div className={`${position === 'portrait' ? 'poster-block' : 'episode-block'} pe-block`}>
+            {image && !error ?
+                <LazyLoadImage
+                    src={image.poster}
+                    alt={image.alt}
+                    effect="blur"
+                    onError={imageError}
+                    afterLoad={imageLoad}
+                    width="100%"/> :
+                error ?
+                    <div className="loader-block" key="empty">
+                        <Icon type="exclamation-circle"/>
+                    </div> : null}
+
+            {loader ?
+                <div className="loader-block" key="loader">
+                    <Icon type="loading"/>
                 </div> : null}
 
-        {loader ?
-            <div className="loader-block" key="loader">
-                <Icon type="loading"/>
-            </div> : null}
-
-        <div className="titles-block">
-            {
-                info ?
-                    [
-                        <span className="sub-title" key="sub-title">{info.subTitle}</span>,
-                        <span className="title" key="title">{info.title}</span>
-                    ] : null
-            }
+            {info && !info.outside ? <TitleBlock title={info.title} subTitle={info.subTitle}/> : null}
         </div>
+
+        {info && info.outside ? <TitleBlock title={info.title} subTitle={info.subTitle}/> : null}
     </div>;
 };
 

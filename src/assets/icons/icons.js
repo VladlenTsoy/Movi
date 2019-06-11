@@ -13,3 +13,7 @@ export {
 export {
     default as ExclamationCircleOutline
 } from "@ant-design/icons/lib/outline/ExclamationCircleOutline";
+
+export {
+    default as UserOutline
+} from "@ant-design/icons/lib/outline/UserOutline";

@@ -5,7 +5,7 @@ import Carousel from "../../../layouts/carousel/Carousel";
 const Newest: React.FC = () => {
     let [url] = useState(`/tv/popular?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`);
 
-    return <div className="newest">
+    return <div className="newest layout-block">
         <div className="title-block">
             <div className="title">
                 Новейшие эпизоды
