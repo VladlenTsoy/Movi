@@ -1,4 +1,5 @@
-const {override, fixBabelImports, addLessLoader, addBundleVisualizer} = require('customize-cra');
+const path = require('path');
+const {override, fixBabelImports, addLessLoader, addBundleVisualizer, addWebpackAlias} = require('customize-cra');
 
 module.exports = override(
     fixBabelImports('import', {
@@ -16,5 +17,8 @@ module.exports = override(
             '@font-family': '\'Montserrat\', sans-serif',
         },
     }),
-    addBundleVisualizer({}, true)
+    addBundleVisualizer({}, true),
+    addWebpackAlias({
+        "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/assets/icons/icons.js")
+    })
 );
