@@ -3,12 +3,18 @@
   padding: 1rem 50px;
 
   .contents {
-    .top-trend {
-      margin-bottom: 15px;
-    }
+    display: grid;
+    //grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 15px;
+    grid-auto-flow: row;
+    margin-bottom: 15px;
 
-    .trend {
-      margin-bottom: 15px;
+    .trend:first-child {
+      grid-row-start: 1;
+      grid-column-start: 1;
+      grid-row-end: 3;
+      grid-column-end: 3;
     }
   }
 

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import './Kids.less';
-import {Col, Row} from "antd";
 import {useStore} from "../../../store/useStore";
-import EpisodeBlock from "../../../layouts/blocks/episode/Episode";
+import QueueAnim from "rc-queue-anim";
+import PosterBlock from "../../../layouts/blocks/poster/Poster";
 
 const Kids: React.FC = () => {
     const {state} = useStore();
@@ -12,7 +12,7 @@ const Kids: React.FC = () => {
     useEffect(() => {
         const fetch = async () => {
             let {data} = await state.api.guest.get(`${url}${1}`);
-            setMovies(data.results);
+            setMovies(data.results.slice(0, 9));
         };
 
         fetch().then();
@@ -31,68 +31,25 @@ const Kids: React.FC = () => {
                 <span>За 3 месяца</span>
             </div>
         </div>
-        <div className="contents">
-            <Row type="flex" gutter={15}>
-                <Col lg={8}>
-                    <div className="top-trend">
-                        <EpisodeBlock data={movies && movies[0] ? {
-                            poster: `https://image.tmdb.org/t/p/w500/${movies[0].backdrop_path}`,
-                            alt: movies[0].title,
-                            title: movies[0].name,
-                            release: movies[0].release_date,
-                        } : null}/>
+        <QueueAnim type={['bottom', 'top']} className="contents">
+            {[
+                movies.map((movie: any, key: number) =>
+                    <div className="trend" key={key}>
+                        <PosterBlock
+                            position="landscape"
+                            image={{
+                                poster: `https://image.tmdb.org/t/p/${key === 0 ? 'w500' : 'w300'}/${movie.backdrop_path}`,
+                                alt: movie.name
+                            }}
+                            info={{
+                                title: movie.name,
+                                subTitle: ''
+                            }}
+                        />
                     </div>
-                </Col>
-                <Col lg={4}>
-                    {[1, 2].map((key) =>
-                        <div className="trend" key={key}>
-                            <EpisodeBlock data={movies && movies[key] ? {
-                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
-                                alt: movies[key].title,
-                                title: movies[key].name,
-                                release: movies[key].release_date,
-                            } : null}/>
-                        </div>
-                    )}
-                </Col>
-                <Col lg={4}>
-                    {[3, 4].map((key) =>
-                        <div className="trend" key={key}>
-                            <EpisodeBlock data={movies && movies[key] ? {
-                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
-                                alt: movies[key].title,
-                                title: movies[key].name,
-                                release: movies[key].release_date,
-                            } : null}/>
-                        </div>
-                    )}
-                </Col>
-                <Col lg={4}>
-                    {[5, 6].map((key) =>
-                        <div className="trend" key={key}>
-                            <EpisodeBlock data={movies && movies[key] ? {
-                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
-                                alt: movies[key].title,
-                                title: movies[key].name,
-                                release: movies[key].release_date,
-                            } : null}/>
-                        </div>
-                    )}
-                </Col>
-                <Col lg={4}>
-                    {[7, 8].map((key) =>
-                        <div className="trend" key={key}>
-                            <EpisodeBlock data={movies && movies[key] ? {
-                                poster: `https://image.tmdb.org/t/p/w300/${movies[key].backdrop_path}`,
-                                alt: movies[key].title,
-                                title: movies[key].name,
-                                release: movies[key].release_date,
-                            } : null}/>
-                        </div>
-                    )}
-                </Col>
-            </Row>
-        </div>
+                )
+            ]}
+        </QueueAnim>
     </div>;
 };
 
