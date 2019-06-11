@@ -30,7 +30,8 @@ const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
                 setMovies([null, null, null, null, null, null, null]);
 
             let {data} = await state.api.guest.get(`${url}${apiPage}`);
-            setMovies((m:any) => [...m, ...data.results]);
+
+            setMovies((m: any) => apiPage === 1 ? data.results : [...m, ...data.results]);
             setLoader(false);
         };
         fetch().catch();
@@ -79,7 +80,6 @@ const Trending: React.FC = () => {
 
     let changeFilter = (e: any) =>
         setFilter(e.currentTarget.dataset.value);
-
 
     return <div className="trending layout-block">
         <div className="title-block">
