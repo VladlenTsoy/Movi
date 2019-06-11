@@ -13,6 +13,27 @@
   align-items: center;
   margin-bottom: 0.5rem;
 
+  .navs {
+    display: flex;
+    align-items: center;
+
+    span {
+      display: inline-flex;
+      cursor: pointer;
+    }
+
+    span.active {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    span.slash {
+      cursor: auto;
+      margin: 0 1rem;
+      color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
   .title {
     font-weight: bold;
     color: white;

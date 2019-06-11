@@ -9,6 +9,7 @@ import Moment from "react-moment";
 // @ts-ignore
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
+//
 const BannerImage = ({data, slide}: any) => {
     return <QueueAnim animConfig={{opacity: [1, 0]}} className="banner-image">
         {data && slide ?
@@ -57,9 +58,7 @@ const Banner: React.FC = () => {
     }, [url, state.api.guest]);
 
     return <div className="banner-block">
-
         <BannerImage data={currentMovie} slide={changeMovie}/>
-
         <QueueAnim type={['right', 'left']} className="more">
             {changeMovie && currentMovie ? [
                 <div className="info" key="info">
@@ -77,12 +76,11 @@ const Banner: React.FC = () => {
                 </div>
             ] : null}
         </QueueAnim>
-
         <div className="carousel" key="carousel">
             {movies.map((movie: any, key: any) =>
                 <div className={`movie ${currentMovie && movie.id === currentMovie.id ? 'active' : ''}`}
                      key={key} data-key={key} onClick={selectMovie}>
-                    <PosterBlock data={{
+                    <PosterBlock image={{
                         poster: 'https://image.tmdb.org/t/p/w92/' + movie.poster_path,
                         alt: movie.title
                     }}/>

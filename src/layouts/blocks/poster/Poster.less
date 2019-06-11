@@ -1,22 +1,31 @@
+.episode-block {
+  padding-bottom: 57%;
+}
+
 .poster-block {
+  padding-bottom: 150%;
+}
+
+.pe-block {
   width: 100%;
   height: 0;
   position: relative;
   z-index: 1;
-  padding-bottom: 150%;
   overflow: hidden;
   background: @bg-empty-color;
 
   .lazy-load-image-background.blur.lazy-load-image-loaded {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
     img {
-      //height: 100%;
-      //width: 100%;
-      //object-fit: cover;
-      //position: absolute;
-      //top: 0;
-      //left: 0;
-      //z-index: 3;
       transition: all 0.3s ease-in-out;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
     }
   }
 
@@ -53,9 +62,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 2;
+    z-index: 1;
     display: flex;
-    background: #292b33;
     align-items: center;
     justify-content: center;
     font-size: 30px;

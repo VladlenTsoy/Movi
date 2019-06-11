@@ -10,7 +10,7 @@ const MovieDayBlock: React.FC<{ data: any }> = ({data}) => {
         </div>
         <Row type="flex" gutter={15}>
             <Col lg={10}>
-                <PosterBlock data={{poster: data.poster, alt: data.title}}/>
+                <PosterBlock image={{poster: data.poster, alt: data.title}}/>
             </Col>
             <Col lg={14}>
                 <div className="movie-of-the-day-block">

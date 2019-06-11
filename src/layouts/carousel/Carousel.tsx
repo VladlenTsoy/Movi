@@ -88,24 +88,17 @@ const Carousel: React.FC<PropsType> = ({url, count, apiCount, title = true, post
             >
                 {movies.map((elem: any): any =>
                     <div className="movie" key={elem.id}>
-                        {poster ?
-                            <PosterBlock data={elem ?
-                                {
-                                    poster: `https://image.tmdb.org/t/p/w154/${elem.poster_path}`,
-                                    alt: elem.title,
-                                    title: title ? elem.title : null,
-                                    release: title ? elem.release_date : null,
-                                } : null
-                            }/> :
-                            <EpisodeBlock data={elem ?
-                                {
-                                    poster: `https://image.tmdb.org/t/p/w300/${elem.backdrop_path}`,
-                                    alt: elem.title,
-                                    title: title ? elem.name : null,
-                                    release: title ? elem.release_date : null,
-                                } : null
-                            }/>
-                        }
+                        <PosterBlock
+                            position={poster ? 'portrait' : 'landscape'}
+                            image={{
+                                poster: `https://image.tmdb.org/t/p/${poster ? 'w185': 'w300'}/${poster ? elem.poster_path : elem.backdrop_path}`,
+                                alt: poster ? elem.title : elem.name
+                            }}
+                            info={{
+                                title: poster ? elem.title : elem.name,
+                                subTitle: '',
+                            }}
+                        />
                     </div>
                 )}
             </Slider>
