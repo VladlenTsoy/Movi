@@ -18,7 +18,7 @@ const Kids: React.FC = () => {
         fetch().then();
     }, [url, state.api.guest]);
 
-    return <div className="kids">
+    return <div className="kids layout-block">
         <div className="title-block">
             <div className="title">
                 Для Детей

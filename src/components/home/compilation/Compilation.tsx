@@ -12,7 +12,7 @@ const Compilation: React.FC = () => {
         setUrl(`/discover/movie?${_genre ? 'with_genres=' + _genre + '&' : ''}api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`);
     };
 
-    return <div className="compilation">
+    return <div className="compilation layout-block">
         <div className="title-block">
             <div className="title">
                 День святого Валентина
