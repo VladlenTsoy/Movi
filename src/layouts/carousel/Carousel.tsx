@@ -4,6 +4,7 @@ import {Icon} from "antd";
 import Slider from "react-slick";
 import {useStore} from "../../store/useStore";
 import PosterBlock from "../blocks/poster/Poster";
+import moment from 'moment';
 
 interface MovieBlock {
     isPoster?: boolean,
@@ -26,7 +27,7 @@ const MovieBlock: React.FC<MovieBlock> = ({isPoster, data, title, isSeason}) => 
                 case 'G':
                     return setSubTitle('Ужасы');
                 case 'GY':
-                    return setSubTitle(`Ужасы, ${data.release_date}`);
+                    return setSubTitle(`Ужасы, ${moment(data.release_date, 'YYYY-MM-DD').format('YYYY')}`);
             }
     }, [title, data]);
 
