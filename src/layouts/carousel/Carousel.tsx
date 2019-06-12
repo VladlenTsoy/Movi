@@ -1,106 +1,20 @@
 import './Carousel.less';
 import React, {useEffect, useState} from "react";
-import {Icon} from "antd";
-import Slider from "react-slick";
 import {useStore} from "../../store/useStore";
-import PosterBlock from "../blocks/poster/Poster";
-import moment from 'moment';
+import SliderBlock from "./Slider";
+import MovieBlock, {MovieProps} from "./MovieCar";
 
-interface MovieBlock {
-    isPoster?: boolean,
-    data?: any,
-    title?: {
-        outside?: boolean,
-        view: 'SE' | 'G' | 'GY',
-    },
-    isSeason?: boolean
-}
-
-const MovieBlock: React.FC<MovieBlock> = ({isPoster, data, title, isSeason}) => {
-    const [subTitle, setSubTitle] = useState('');
-
-    useEffect(() => {
-        if (title && data)
-            switch (title.view) {
-                case 'SE':
-                    return setSubTitle(`Сезон ${data.season_number}, Серия ${data.episode_number}`);
-                case 'G':
-                    return setSubTitle('Ужасы');
-                case 'GY':
-                    return setSubTitle(`Ужасы, ${moment(data.release_date, 'YYYY-MM-DD').format('YYYY')}`);
-            }
-    }, [title, data]);
-
-    return <div className="movie">
-        <PosterBlock
-            position={isPoster ? 'portrait' : 'landscape'}
-            {...data ?
-                {
-                    image: {
-                        poster: `https://image.tmdb.org/t/p/${isPoster ? 'w185' : 'w300'}/${isPoster ? data.poster_path : isSeason ? data.still_path : data.backdrop_path}`,
-                        alt: isPoster ? data.title : data.name
-                    },
-                    ...title ? {
-                        info: {
-                            outside: title.outside,
-                            title: isPoster ? data.title : data.name,
-                            subTitle: subTitle,
-                        }
-                    } : null
-                } : null}
-        />
-    </div>
-};
-
-const NextArrow = ({className, onClick, loaderNext}: any) => {
-    return <div className={`${className} ${!loaderNext || 'slick-disabled'}`}
-                onClick={loaderNext ? () => null : onClick}>
-        {loaderNext ? <Icon type="loading"/> : <Icon type="right"/>}
-    </div>;
-};
-
-const PrevArrow = ({className, onClick}: any) =>
-    <div className={className} onClick={onClick}><Icon type="left"/></div>;
-
-interface SlideBlock {
-    afterChange(current: number): void,
-
-    loaderNext: boolean,
-    count: number,
-}
-
-const SliderBlock: React.FC<SlideBlock> = ({afterChange, children, count, loaderNext}) => {
-    // Setting for sliders
-    const settings = {
-        dots: false,
-        infinite: false,
-        draggable: false,
-        arrows: true,
-        speed: 500,
-        lazyLoad: 'ondemand' as 'ondemand',
-        slidesToShow: count,
-        slidesToScroll: count,
-        nextArrow: <NextArrow loaderNext={loaderNext}/>,
-        prevArrow: <PrevArrow/>,
-    };
-
-    return <Slider {...settings}
-                   key="carousel"
-                   className="carousel-movies"
-                   afterChange={currentSlide => afterChange(currentSlide + 7)}>{children}</Slider>
-};
-
-interface Carousel {
+interface CarouselProps {
     config: {
         url: string,
         count: number,
         apiCount: number,
     },
     isScrollMax?: boolean,
-    outputConf: MovieBlock
+    outputConf: MovieProps
 }
 
-const Carousel: React.FC<Carousel> = ({config, isScrollMax, outputConf}) => {
+const Carousel: React.FC<CarouselProps> = ({config, isScrollMax, outputConf}) => {
     const {state} = useStore();
     const [apiPage, setApiPage] = useState(1);
     const [loaderNext, setLoaderNext] = useState(false);
