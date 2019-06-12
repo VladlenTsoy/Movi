@@ -10,9 +10,10 @@ interface Info {
     subTitle?: string,
 }
 
-const TitleBlock: React.FC<Info> = ({subTitle, title}) => {
+
+const TitleBlock: React.FC<Info> = ({title, subTitle}) => {
     return <div className="titles-block">
-        {subTitle || <span className="sub-title" key="sub-title">{subTitle}</span>}
+        {!subTitle || <span className="sub-title" key="sub-title">{subTitle}</span>}
         <span className="title" key="title">{title}</span>
     </div>
 };

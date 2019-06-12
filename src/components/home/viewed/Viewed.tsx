@@ -13,7 +13,20 @@ const Viewed: React.FC = () => {
             <div className="line"/>
         </div>
         <div className="contents">
-            <Carousel url={url} count={10} apiCount={20} title={true} poster={true}/>
+            <Carousel
+                config={{
+                    url: url,
+                    count: 10,
+                    apiCount: 20,
+                }}
+                outputConf={{
+                    isPoster: true,
+                    title: {
+                        view: 'GY',
+                        outside: true
+                    }
+                }}
+            />
         </div>
     </div>;
 };

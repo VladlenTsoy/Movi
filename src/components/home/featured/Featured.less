@@ -1,5 +1,5 @@
 .featured {
-  padding: 4rem 50px 0;
+  padding-top: 4rem;
   color: @text-secondary;
   //background: url("../../../assets/img_22.jpg") no-repeat center;
   background-size: cover;
@@ -8,29 +8,33 @@
   .head-block {
     display: grid;
     text-align: center;
-    margin: 0 auto 4rem;
-    width: 250px;
+    margin: 1rem auto 4rem;
+    width: 270px;
 
     .category {
       font-size: 12px;
       color: @text-secondary;
+      margin-bottom: 1.5rem;
     }
 
     .title {
       color: #ffffff;
       font-weight: bolder;
       font-size: 40px;
+      line-height: 45px;
+      margin-bottom: 1.5rem;
     }
 
     .description {
       color: #ffffff;
       font-size: 20px;
+      line-height: 25px;
     }
   }
 
   .tabs {
     position: relative;
-    z-index:  2;
+    z-index: 2;
     display: flex;
     color: #ffffff;
     justify-content: center;
@@ -59,7 +63,8 @@
 
   .contents {
     position: relative;
-    z-index:  2;
+    z-index: 2;
+
     .episode {
       height: 120px;
       background: #292b33;
@@ -74,5 +79,6 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-image: linear-gradient(180deg, #89f7fe00 40%, #121318 95%);
+  //background-image: linear-gradient(180deg, #89f7fe00 40%, #121318 95%);
+  background-image: linear-gradient(180deg, #12131800 40%, #121318 90%);
 }

@@ -27,7 +27,19 @@ const Compilation: React.FC = () => {
             </div>
         </div>
         <div className="contents">
-            <Carousel url={url} count={8} apiCount={20} title={true} poster={true}/>
+            <Carousel
+                config={{
+                    url: url,
+                    count: 8,
+                    apiCount: 20
+                }}
+                outputConf={{
+                    isPoster: true,
+                    title: {
+                        view: 'GY'
+                    }
+                }}
+            />
         </div>
     </div>;
 };
