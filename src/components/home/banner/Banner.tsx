@@ -9,8 +9,16 @@ import Moment from "react-moment";
 // @ts-ignore
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
-//
-const BannerImage = ({data, slide}: any) => {
+interface BannerImage {
+    data: any,
+}
+
+/**
+ * Output image for the banner (background)
+ * @param data = movie | tv | kids
+ * @param slide = banner loading status
+ */
+const BannerImage: React.FC<BannerImage> = ({data}) => {
     const [loader, setLoader] = useState(true);
     const [error, setError] = useState(false);
 
@@ -25,7 +33,7 @@ const BannerImage = ({data, slide}: any) => {
     };
 
     return <div className="banner-image">
-        {data && slide && !error ?
+        {data && !error ?
             <LazyLoadImage
                 src={`https://image.tmdb.org/t/p/w1280/${data.backdrop_path}`}
                 alt={data.title}
@@ -45,48 +53,49 @@ const BannerImage = ({data, slide}: any) => {
     </div>
 };
 
-// Output movies by 'banner_at'
-// Url = banner/movies
-const Banner: React.FC = () => {
+/**
+ * Output movies by 'banner_at'
+ */
+const BannerHomeBlock: React.FC = () => {
     const {state} = useStore();
     const [url] = useState(`/trending/movie/day?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
-    const [movies, setMovies]: any = useState([]);
-    const [currentMovie, setCurrentMovie]: any = useState(null);
-    const [changeMovie, setChangeMovie] = useState(false);
+    const [banners, setMovies]: any = useState([]);
+    const [currentData, setCurrentData]: any = useState(null);
 
     const selectMovie = (e: any) => {
         const {key} = e.currentTarget.dataset;
 
-        if (movies[key] === currentMovie)
+        if (banners[key] === currentData)
             return;
 
-        setCurrentMovie(movies[key]);
-        setChangeMovie(false);
-        setTimeout(() => setChangeMovie(true), 500);
+        setCurrentData(null);
+        setTimeout(() => setCurrentData(banners[key]), 500);
     };
 
     useEffect(() => {
         const fetch = async () => {
             const {data} = await state.api.guest.get(`${url}${1}`);
-            setChangeMovie(true);
             setMovies(data.results.slice(0, 5));
-            setCurrentMovie(data.results[0]);
+            setCurrentData(data.results[0]);
         };
 
         fetch().catch();
     }, [url, state.api.guest]);
 
-    return <div className="banner-block">
-        <BannerImage data={currentMovie} slide={changeMovie} key={currentMovie ? currentMovie.id : 'banner'}/>
-        <QueueAnim type={['right', 'left']} className="more">
-            {changeMovie && currentMovie ? [
-                <div className="info" key="info">
+    return <div className="banner-block" key="banner-home-block">
+        {/* picture for the background */}
+        <BannerImage data={currentData} key={currentData ? currentData.id : 'banner'}/>
+
+        {/* output of detailed information */}
+        <QueueAnim type={['bottom', 'top']} className="more">
+            {currentData ? [
+                <div className="info" key={`info-${currentData.id}`}>
                     <span>Ужасы</span>
-                    <span><Moment format="YYYY">{currentMovie.release}</Moment></span>
+                    <span><Moment format="YYYY">{currentData.release}</Moment></span>
                     <span>США</span>
                 </div>,
-                <h1 key="title">{currentMovie.title}</h1>,
-                <div className="actions" key="actions">
+                <h1 key={`title-${currentData.id}`}>{currentData.title}</h1>,
+                <div className="actions" key={`actions-${currentData.id}`}>
                     <Button type="primary" size="large">
                         Смотреть
                         <FontAwesomeIcon icon="play"/>
@@ -95,18 +104,21 @@ const Banner: React.FC = () => {
                 </div>
             ] : null}
         </QueueAnim>
-        <div className="carousel" key="carousel">
-            {movies.map((movie: any, key: any) =>
-                <div className={`movie ${currentMovie && movie.id === currentMovie.id ? 'active' : ''}`}
+
+        {/* output five movies for banner */}
+        <div className="carousel" key="banner-carousel">
+            {banners.map((banner: any, key: number) =>
+                <div className={`movie ${currentData && banner.id === currentData.id ? 'active' : ''}`}
                      key={key} data-key={key} onClick={selectMovie}>
                     <PosterBlock image={{
-                        poster: 'https://image.tmdb.org/t/p/w92/' + movie.poster_path,
-                        alt: movie.title
+                        poster: 'https://image.tmdb.org/t/p/w92/' + banner.poster_path,
+                        alt: banner.title
                     }}/>
                 </div>
             )}
         </div>
+
     </div>
 };
 
-export default Banner;
+export default BannerHomeBlock;
