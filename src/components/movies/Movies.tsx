@@ -4,9 +4,10 @@ import Genres from "./filter/genres/Genres";
 
 const Movies: React.FC = () => {
     return <div className="movies">
-        <Filter><Genres>
-
-        </Genres></Filter>
+        <Filter>
+            <Genres>
+            </Genres>
+        </Filter>
     </div>;
 };
 

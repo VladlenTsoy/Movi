@@ -6,7 +6,7 @@ import './App.less';
 import Navbar from "../layouts/navbar/Navbar";
 import FooterBlock from "../layouts/footer/Footer";
 import Home from "./home/Home";
-import Movies from "./movies/movies";
+import Movies from "./movies/Movies";
 import Search from "../layouts/search/Search";
 import {useStore} from "../store/useStore";
 import {CHANGE_SEARCH_INPUT} from "../store/app/reducer";

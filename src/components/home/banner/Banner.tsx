@@ -56,7 +56,7 @@ const BannerImage: React.FC<BannerImage> = ({data}) => {
 /**
  * Output movies by 'banner_at'
  */
-const BannerHomeBlock: React.FC = () => {
+const Banner: React.FC = () => {
     const {state} = useStore();
     const [url] = useState(`/trending/movie/day?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
     const [banners, setMovies]: any = useState([]);
@@ -121,4 +121,4 @@ const BannerHomeBlock: React.FC = () => {
     </div>
 };
 
-export default BannerHomeBlock;
+export default Banner;
