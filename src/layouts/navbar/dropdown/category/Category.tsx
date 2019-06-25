@@ -1,6 +1,7 @@
 import React from "react";
 import './Category.less';
 import {Col} from "antd";
+import {Link} from "react-router-dom";
 
 const CategoryBlock: React.FC = () => {
     return <Col lg={4} className="block">
@@ -8,15 +9,15 @@ const CategoryBlock: React.FC = () => {
             Категории
         </div>
         <div className="category-block">
-            <span>Все</span>
-            <span>Новинки</span>
-            <span>Подборки</span>
-            <span>Популяные</span>
-            <span>Рекомендованные</span>
+            <Link to="/movies">Все</Link>
+            <a>Новинки</a>
+            <a>Подборки</a>
+            <a>Популяные</a>
+            <a>Рекомендованные</a>
             <span className="sub-title">По рейтингу</span>
-            <span>IMDb</span>
-            <span>КиноПоиск</span>
-            <span>Rotten Tomatoes</span>
+            <a>IMDb</a>
+            <a>КиноПоиск</a>
+            <a>Rotten Tomatoes</a>
         </div>
     </Col>;
 };
