@@ -1,4 +1,4 @@
-.ant-layout{
+.ant-layout {
   background: #121318 !important;
 
   -moz-user-select: none;
@@ -69,6 +69,46 @@
 
     span:not(:last-child) {
       margin-right: 2rem;
+    }
+  }
+}
+
+label.ant-checkbox-wrapper {
+  font-size: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  color: #B4BBBF;
+
+  .ant-checkbox {
+    .ant-checkbox-inner {
+      background: none;
+      border: 2px solid #B4BBBF;
+      border-radius: 0;
+    }
+
+    &.ant-checkbox-checked {
+      background: @primary-color;
+
+      .ant-checkbox-inner {
+        border-color: @primary-color;
+
+        &::after{
+          border-color: #131722;
+        }
+      }
+    }
+  }
+
+  span {
+    font-size: inherit;
+    color: #B4BBBF;
+  }
+
+  &:hover, &:active{
+    span {
+      color: @primary-color;
     }
   }
 }
