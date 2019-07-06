@@ -16,7 +16,7 @@ const Actions: any = {
 
 const reducer = (state: any, action: { type: string, payload: any }) => {
     const act = Actions[action.type];
-    const update = act(action.payload);
+    const update = act(action.payload, state);
     return {...state, ...update};
 };
 
