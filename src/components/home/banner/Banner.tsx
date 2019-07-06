@@ -16,7 +16,6 @@ interface BannerImage {
 /**
  * Output image for the banner (background)
  * @param data = movie | tv | kids
- * @param slide = banner loading status
  */
 const BannerImage: React.FC<BannerImage> = ({data}) => {
     const [loader, setLoader] = useState(true);
@@ -117,7 +116,6 @@ const Banner: React.FC = () => {
                 </div>
             )}
         </div>
-
     </div>
 };
 
