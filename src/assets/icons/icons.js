@@ -29,3 +29,7 @@ export {
 export {
     default as StarFill
 } from "@ant-design/icons/lib/fill/StarFill";
+
+export {
+    default as SortDescendingOutline
+} from "@ant-design/icons/lib/outline/SortDescendingOutline";
