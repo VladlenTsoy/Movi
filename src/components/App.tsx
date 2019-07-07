@@ -9,6 +9,8 @@ import Home from "./home/Home";
 import Movies from "./movies/Movies";
 import Search from "../layouts/search/Search";
 import {useStore} from "../store/useStore";
+import Login from "./auth/login/Login";
+import Registration from "./auth/registration/Registration";
 import {CHANGE_SEARCH_INPUT} from "../store/app/reducer";
 
 const defaultAnimation = [
@@ -37,7 +39,9 @@ const App: React.FC = () => {
             <Navbar/>
             <Switch>
                 <Route exact path="/" component={Home}/>
-                <Route exact path="/movies" component={Movies}/>
+                <Route path="/movies" component={Movies}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/registration" component={Registration}/>
             </Switch>
             <FooterBlock/>
         </Layout>

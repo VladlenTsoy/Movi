@@ -26,7 +26,7 @@ const Navbar: React.FC<any> = ({location, history}: any) => {
         if (dropdown)
             setDropdown(false);
 
-        history.push('/auth/login');
+        history.push('/login');
     };
 
     // Click Homepage
@@ -72,7 +72,7 @@ const Navbar: React.FC<any> = ({location, history}: any) => {
                     />
                 </div>
                 <Menu.Item onClick={onUser} key="/auth/login"
-                           className={`profile ${pathname === '/auth/login' ? 'ant-menu-item-selected' : ''}`}>
+                           className={`profile ${pathname === '/login' ? 'ant-menu-item-selected' : ''}`}>
                     <Avatar icon="user"/>
                     <span className="profile-title">Войти</span>
                 </Menu.Item>
