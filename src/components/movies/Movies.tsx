@@ -1,9 +1,30 @@
 import React, {useEffect, useState} from "react";
 import "./Movies.less";
 import Genres from "./filter/genres/Genres";
-import {Col, Row, Icon} from "antd";
+import {Col, Row, Menu, Dropdown, Icon, Checkbox} from "antd";
 import MoviesPosterBlock from "../../layouts/blocks/movie-poster/MoviePoster";
 import {useStore} from "../../store/useStore";
+import Breadcrumb from "../../layouts/breadcrumb/Breadcrumb";
+
+const menu = (
+    <Menu>
+        <Menu.Item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                1st menu item
+            </a>
+        </Menu.Item>
+        <Menu.Item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                2nd menu item
+            </a>
+        </Menu.Item>
+        <Menu.Item>
+            <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+                3rd menu item
+            </a>
+        </Menu.Item>
+    </Menu>
+);
 
 const Movies: React.FC = () => {
     const {state} = useStore();
@@ -31,13 +52,9 @@ const Movies: React.FC = () => {
 
     console.log(movies);
     return <div className="movies">
-        <div className="breadcrumbs">
-            <span>Главная</span>
-            <span><Icon type="right"/></span>
-            <span>Фильмы</span>
-        </div>
+        <Breadcrumb/>
         <Row>
-            <Col span={6} className="wrapper-filter-genres">
+            <Col span={6}>
                 <Genres/>
             </Col>
             <Col span={18} className="wrapper-movies-block">
@@ -46,7 +63,19 @@ const Movies: React.FC = () => {
                 </div>
                 <div className="wrapper-movies-filter-block">
                     <div className="movies-filter">
+                        <Checkbox>Новинки</Checkbox>
 
+                        <Dropdown overlay={menu} placement="bottomRight">
+                            <a className="ant-dropdown-link" href="#">
+                                Показать 20 <Icon type="down" />
+                            </a>
+                        </Dropdown>
+
+                        <Dropdown overlay={menu} placement="bottomRight">
+                            <a className="ant-dropdown-link" href="#">
+                                <Icon type="sort-descending" /> от А до Я <Icon type="down" />
+                            </a>
+                        </Dropdown>
                     </div>
                 </div>
                 <div className="wrapper-posters-block">
