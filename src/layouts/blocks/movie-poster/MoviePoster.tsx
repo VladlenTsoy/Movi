@@ -2,6 +2,7 @@ import React from "react";
 import './MoviePoster.less'
 import PosterBlock from "../poster/Poster";
 import {Icon} from "antd";
+import {Link} from "react-router-dom";
 
 const MoviesPosterBlock: React.FC<any> = ({movie}) => {
     return <div className="movie-poster-block">
@@ -13,7 +14,7 @@ const MoviesPosterBlock: React.FC<any> = ({movie}) => {
         </div>
         <div className="info-block">
             <span className="genres">Action, 2019</span>
-            <span className="title">{movie.title}</span>
+            <Link to={`movies/${movie.id}`} className="title">{movie.title}</Link>
             <span className="description">{movie.overview}</span>
             <div className="reviews">
                 <div className="stars">
