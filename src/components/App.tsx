@@ -1,52 +1,55 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {Layout} from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import './App.less';
 import Navbar from "../layouts/navbar/Navbar";
 import FooterBlock from "../layouts/footer/Footer";
+import Search from "../layouts/search/Search";
 import Home from "./home/Home";
 import Movies from "./movies/Movies";
-import Search from "../layouts/search/Search";
-import {useStore} from "../store/useStore";
 import Login from "./auth/login/Login";
 import Registration from "./auth/registration/Registration";
-import {CHANGE_SEARCH_INPUT} from "../store/app/reducer";
+import Movie from "./movie/Movie";
+import {appChangeSearchInput} from "../store/app/actions";
 
 const defaultAnimation = [
     {opacity: [1, 0]},
 ];
 
 const App: React.FC = () => {
-    let {state, dispatch} = useStore();
+    const {app} = useSelector((state: any) => (state));
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        document.onkeydown =  (e: any) => {
+        document.onkeydown = (e: any) => {
             if (e.keyCode === 27)
-                dispatch({type: CHANGE_SEARCH_INPUT, payload: ''});
+                dispatch(appChangeSearchInput(''));
 
-            if (e.key.length <= 1 && (!state.search || state.search === ''))
-                dispatch({type: CHANGE_SEARCH_INPUT, payload: e.key});
+            if (e.key.length <= 1 && (!app.search || app.search === ''))
+                dispatch(appChangeSearchInput(e.key));
         };
 
         return () => {
             document.onkeydown = null
         };
-    }, [state.search, dispatch]);
+    }, [app.search]);
 
     return <Router>
         <Layout>
             <Navbar/>
             <Switch>
                 <Route exact path="/" component={Home}/>
-                <Route path="/movies" component={Movies}/>
+                <Route exact path="/movies" component={Movies}/>
+                <Route path="/movies/:id" component={Movie}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/registration" component={Registration}/>
             </Switch>
             <FooterBlock/>
         </Layout>
         <QueueAnim animConfig={defaultAnimation} duration={300}>
-            {state.search && state.search !== '' ?
+            {app.search && app.search !== '' ?
                 [<Search key={1}/>]
                 : null}
         </QueueAnim>

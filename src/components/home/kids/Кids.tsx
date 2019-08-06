@@ -1,22 +1,20 @@
 import React, {useEffect, useState} from "react";
 import './Kids.less';
-import {useStore} from "../../../store/useStore";
 import QueueAnim from "rc-queue-anim";
 import PosterBlock from "../../../layouts/blocks/poster/Poster";
+import {useSelector} from "react-redux";
 
 const Kids: React.FC = () => {
-    const {state} = useStore();
+    const {api} = useSelector((state: any) => (state));
     const [url] = useState(`/tv/popular?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=1`);
     const [movies, setMovies]: any = useState([]);
 
     useEffect(() => {
-        const fetch = async () => {
-            let {data} = await state.api.guest.get(`${url}${1}`);
+        (async () => {
+            let {data} = await api.guest.get(`${url}${1}`);
             setMovies(data.results.slice(0, 9));
-        };
-
-        fetch().then();
-    }, [url, state.api.guest]);
+        })();
+    }, [url, api.guest]);
 
     return <div className="kids layout-block">
         <div className="title-block">

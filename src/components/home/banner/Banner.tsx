@@ -4,10 +4,10 @@ import {Button, Icon} from "antd";
 import QueueAnim from 'rc-queue-anim';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import PosterBlock from "../../../layouts/blocks/poster/Poster";
-import {useStore} from "../../../store/useStore";
 import Moment from "react-moment";
 // @ts-ignore
 import {LazyLoadImage} from 'react-lazy-load-image-component';
+import {useSelector} from "react-redux";
 
 interface BannerImage {
     data: any,
@@ -56,7 +56,7 @@ const BannerImage: React.FC<BannerImage> = ({data}) => {
  * Output movies by 'banner_at'
  */
 const Banner: React.FC = () => {
-    const {state} = useStore();
+    const {api} = useSelector((state: any) => (state));
     const [url] = useState(`/trending/movie/day?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
     const [banners, setMovies]: any = useState([]);
     const [currentData, setCurrentData]: any = useState(null);
@@ -72,14 +72,12 @@ const Banner: React.FC = () => {
     };
 
     useEffect(() => {
-        const fetch = async () => {
-            const {data} = await state.api.guest.get(`${url}${1}`);
+        (async () => {
+            const {data} = await api.guest.get(`${url}${1}`);
             setMovies(data.results.slice(0, 5));
             setCurrentData(data.results[0]);
-        };
-
-        fetch().catch();
-    }, [url, state.api.guest]);
+        })();
+    }, [url, api.guest]);
 
     return <div className="banner-block" key="banner-home-block">
         {/* picture for the background */}

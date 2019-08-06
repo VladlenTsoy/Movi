@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import './Featured.less';
-import {useStore} from "../../../store/useStore";
 import Carousel from "../../../layouts/carousel/Carousel";
+import {useSelector} from "react-redux";
 
 const Featured: React.FC = () => {
     const [tvId] = useState(1399);
-    const {state} = useStore();
+    const {api} = useSelector((state: any) => (state));
     const [url] = useState(`/tv/${tvId}?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
     const [current, setCurrent]: any = useState(null);
     const [season, setSeason] = useState(8);
@@ -13,13 +13,11 @@ const Featured: React.FC = () => {
     const [urlSeason, setUrlSeason] = useState(`/tv/${tvId}/season/${season}?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
 
     useEffect(() => {
-        const fetch = async () => {
-            const {data} = await state.api.guest.get(url);
+        (async () => {
+            const {data} = await api.guest.get(url);
             setCurrent(data)
-        };
-
-        fetch().catch();
-    }, [url, state.api.guest]);
+        })();
+    }, [url, api.guest]);
 
     const selectSeason = (s: any) => {
         setApiCount(s.episode_count);

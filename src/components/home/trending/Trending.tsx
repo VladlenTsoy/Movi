@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import './Trending.less';
 import {Button} from "antd";
-import {useStore} from "../../../store/useStore";
 import QueueAnim from "rc-queue-anim";
 import PosterBlock from "../../../layouts/blocks/poster/Poster";
+import {useSelector} from "react-redux";
 
 const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
-    const {state} = useStore();
+    const {api} = useSelector((state: any) => (state));
     const [output, setOutput]: any = useState([]);
     const [page, setPage] = useState(0);
     const [apiPage, setApiPage] = useState(1);
@@ -23,19 +23,18 @@ const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
     }, [apiPage, page, output.length]);
 
     useEffect(() => {
-        const fetch = async () => {
+        (async () => {
             setLoader(true);
 
             if (apiPage === 1)
                 setMovies([null, null, null, null, null, null, null]);
 
-            let {data} = await state.api.guest.get(`${url}${apiPage}`);
+            let {data} = await api.guest.get(`${url}${apiPage}`);
 
             setMovies((m: any) => apiPage === 1 ? data.results : [...m, ...data.results]);
             setLoader(false);
-        };
-        fetch().catch();
-    }, [url, state.api.guest, apiPage]);
+        })();
+    }, [url, api.guest, apiPage]);
 
     return <div>
         <QueueAnim type={['bottom', 'top']} className="trends">

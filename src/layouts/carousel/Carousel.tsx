@@ -1,8 +1,8 @@
 import './Carousel.less';
 import React, {useEffect, useState} from "react";
-import {useStore} from "../../store/useStore";
 import SliderBlock from "./Slider";
 import MovieBlock, {MovieProps} from "./MovieCar";
+import {useSelector} from "react-redux";
 
 interface CarouselProps {
     config: {
@@ -15,7 +15,7 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({config, isScrollMax, outputConf}) => {
-    const {state} = useStore();
+    const {api} = useSelector((state: any) => (state));
     const [apiPage, setApiPage] = useState(1);
     const [loaderNext, setLoaderNext] = useState(false);
     // Current movies
@@ -28,24 +28,22 @@ const Carousel: React.FC<CarouselProps> = ({config, isScrollMax, outputConf}) =>
     };
 
     useEffect(() => {
-        const fetch = async () => {
+        (async () => {
             setLoaderNext(true);
             apiPage !== 1 || setMovies(Array(config.count).fill(null));
 
-            let {data} = await state.api.guest.get(`${config.url}${apiPage}`);
+            let {data} = await api.guest.get(`${config.url}${apiPage}`);
 
             apiPage === 1 ? setMovies(data[outputConf.isSeason ? 'episodes' : 'results']) :
                 setMovies((m: any) => [...m, ...data[outputConf.isSeason ? 'episodes' : 'results']]);
 
             setLoaderNext(false);
-        };
-
-        fetch().catch();
-    }, [apiPage, config, outputConf.isSeason, state.api.guest]);
+        })();
+    }, [apiPage, config, outputConf.isSeason, api.guest]);
 
     useEffect(() => {
         setApiPage(1);
-    }, [config, state.api.guest]);
+    }, [config, api.guest]);
 
     return <div className="carousel">
         <SliderBlock afterChange={afterChange} loaderNext={loaderNext} count={config.count}>

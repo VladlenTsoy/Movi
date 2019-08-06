@@ -2,8 +2,8 @@ import React from 'react';
 import './Search.less';
 import QueueAnim from 'rc-queue-anim';
 import {Tabs, Input} from "antd";
-import {useStore} from "../../store/useStore";
-import {CHANGE_SEARCH_INPUT} from "../../store/app/reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {appChangeSearchInput} from "../../store/app/actions";
 
 const TabPane = Tabs.TabPane;
 const defaultAnimation = [
@@ -11,10 +11,11 @@ const defaultAnimation = [
 ];
 
 const SearchBlock: React.FC<any> = () => {
-    let {state, dispatch} = useStore();
+    const {app} = useSelector((state: any) => (state));
+    const dispatch = useDispatch();
 
     let onChangeSearch = (e: any) =>
-        dispatch({type: CHANGE_SEARCH_INPUT, payload: e.target.value});
+        dispatch(appChangeSearchInput(e.target.value));
 
     return <div className="search-block">
         <QueueAnim animConfig={defaultAnimation}>
@@ -23,7 +24,7 @@ const SearchBlock: React.FC<any> = () => {
                     <Input
                         allowClear
                         onChange={onChangeSearch}
-                        value={state.search}
+                        value={app.search}
                         placeholder="Введите название фильма, сериала или имя актера"
                         autoFocus={true}
                     />

@@ -4,25 +4,25 @@ import './Navbar.less';
 import {Layout, Menu, Input, Avatar} from "antd";
 import {withRouter} from 'react-router-dom';
 import DropdownBlock from "./dropdown/Dropdown";
-import {useStore} from "../../store/useStore";
+import {useSelector} from "react-redux";
 
 const {Header} = Layout;
 const {Search} = Input;
 
 const Navbar: React.FC<any> = ({location, history}: any) => {
-    let {pathname} = location;
-    let {state} = useStore();
-    let [dropdown, setDropdown] = useState(false);
-    let [block, setBlock] = useState('');
+    const {app} = useSelector((state: any) => (state));
+    const {pathname} = location;
+    const [dropdown, setDropdown] = useState(false);
+    const [block, setBlock] = useState('');
 
     // Toggle Dropdown click Menu.Item
-    let onDropdown = (e: any) => {
+    const onDropdown = (e: any) => {
         setDropdown((e.key === block && !dropdown) || e.key !== block);
         setBlock(e.key);
     };
 
     // Action click on user button or login
-    let onUser = (e: any) => {
+    const onUser = (e: any) => {
         if (dropdown)
             setDropdown(false);
 
@@ -30,7 +30,7 @@ const Navbar: React.FC<any> = ({location, history}: any) => {
     };
 
     // Click Homepage
-    let onMain = (e: any) => {
+    const onMain = (e: any) => {
         if (dropdown)
             setDropdown(false);
 
@@ -67,7 +67,7 @@ const Navbar: React.FC<any> = ({location, history}: any) => {
                 <div className="search">
                     <Search
                         placeholder="Введите название фильма, сериала или имя актера"
-                        value={state.search}
+                        value={app.search}
                         autoFocus={true}
                     />
                 </div>

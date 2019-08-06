@@ -8,14 +8,15 @@ import ruRU from 'antd/lib/locale-provider/ru_RU';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faPlay} from '@fortawesome/free-solid-svg-icons'
 import {fab, faTelegram} from '@fortawesome/free-brands-svg-icons'
-import {StoreProvider} from "./store/useStore";
+import {store} from "./store/rootReducer";
+import {Provider} from "react-redux";
 
 library.add(fab, faTelegram, faPlay);
 
 ReactDOM.render(<LocaleProvider locale={ruRU}>
-    <StoreProvider>
+    <Provider store={store}>
         <App/>
-    </StoreProvider>
+    </Provider>
 </LocaleProvider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

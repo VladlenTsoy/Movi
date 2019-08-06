@@ -1,12 +1,15 @@
-export const CHANGE_SEARCH_INPUT = "CHANGE_SEARCH_INPUT";
+import {APP_SEARCH_STRING_INPUT} from "./actions";
 
-export const defaultAppState = {
+export const appReducer = (state = {
     search: '',
-};
-
-export const appAction = {
-    // [CHANGE_SEARCH_INPUT]: (state: any) => ({search: state}),
-    [CHANGE_SEARCH_INPUT]: (state: any, a:any) => {
-        return {search: state}
-    },
+}, action: any) => {
+    switch (action.type) {
+        case APP_SEARCH_STRING_INPUT:
+            return {
+                ...state,
+                search: action.payload
+            };
+        default:
+            return state;
+    }
 };
