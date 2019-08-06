@@ -1,74 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import './Trending.less';
-import {Button} from "antd";
-import QueueAnim from "rc-queue-anim";
-import PosterBlock from "../../../layouts/blocks/poster/Poster";
-import {useSelector} from "react-redux";
-
-const Contents: React.FC<{ url: string, tab: number }> = ({url, tab}) => {
-    const {api} = useSelector((state: any) => (state));
-    const [output, setOutput]: any = useState([]);
-    const [page, setPage] = useState(0);
-    const [apiPage, setApiPage] = useState(1);
-    const [movies, setMovies]: any = useState([]);
-    const [loader, setLoader]: any = useState(false);
-
-    useEffect(() => {
-        setOutput(movies.slice(0, (page * 10 + 7)));
-    }, [movies, page]);
-
-    useEffect(() => {
-        if (apiPage * 20 - output.length < 10)
-            setApiPage(apiPage + 1);
-    }, [apiPage, page, output.length]);
-
-    useEffect(() => {
-        (async () => {
-            setLoader(true);
-
-            if (apiPage === 1)
-                setMovies([null, null, null, null, null, null, null]);
-
-            let {data} = await api.guest.get(`${url}${apiPage}`);
-
-            setMovies((m: any) => apiPage === 1 ? data.results : [...m, ...data.results]);
-            setLoader(false);
-        })();
-    }, [url, api.guest, apiPage]);
-
-    return <div>
-        <QueueAnim type={['bottom', 'top']} className="trends">
-            {[
-                output.map((movie: any, key: number) =>
-                    <div className="trend" key={key}>
-                        {movie ?
-                            <PosterBlock
-                                position="landscape"
-                                image={{
-                                    poster: `https://image.tmdb.org/t/p/${key === 0 ? 'w500' : 'w300'}/${movie.backdrop_path}`,
-                                    alt: tab ? movie.title : movie.name
-                                }}
-                                info={{
-                                    title: tab ? movie.title : movie.name,
-                                    subTitle: ''
-                                }}
-                            /> :
-                            <PosterBlock position="landscape"/>
-                        }
-                    </div>)
-            ]}
-        </QueueAnim>
-        <div className="action">
-            <Button className="btn-for-block"
-                    type="ghost" block
-                    onClick={() => setPage(page + 1)}
-                    loading={loader}
-                    icon="plus">
-                Показать еще
-            </Button>
-        </div>
-    </div>
-};
+import TrendingContent from "./trending-content/TrendingContent";
 
 const Trending: React.FC = () => {
     let [currentTab, setCurrentTab] = useState(0);
@@ -103,10 +35,10 @@ const Trending: React.FC = () => {
 
         <div className="contents">
             {currentTab ?
-                <Contents key={`tv_${filter}`}
+                <TrendingContent key={`tv_${filter}`}
                           tab={currentTab}
                           url={`/trending/movie/${filter}?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`}/> :
-                <Contents key={`movie_${filter}`}
+                <TrendingContent key={`movie_${filter}`}
                           tab={currentTab}
                           url={`/trending/tv/${filter}?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru&page=`}/>
             }

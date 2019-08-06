@@ -4,7 +4,36 @@ import SliderBlock from "./Slider";
 import MovieBlock, {MovieProps} from "./MovieCar";
 import {useSelector} from "react-redux";
 
-interface CarouselProps {
+interface CarouselPropTypes {
+    afterChange: any;
+    loaderNext: any;
+    config: any;
+    movies: any;
+    outputConf: any;
+}
+
+const Carousel: React.FC<CarouselPropTypes> = ({afterChange, loaderNext, config, movies, outputConf}) => {
+    return <div className="carousel">
+        <SliderBlock afterChange={afterChange} loaderNext={loaderNext} count={config.count}>
+            {movies.map((elem: any, key: number): any =>
+                <MovieBlock
+                    key={key}
+                    data={elem}
+                    isPoster={outputConf.isPoster}
+                    isSeason={outputConf.isSeason}
+                    {...outputConf.title ? {
+                        title: {
+                            outside: outputConf.title.outside,
+                            view: outputConf.title.view,
+                        }
+                    } : null}
+                />
+            )}
+        </SliderBlock>
+    </div>;
+};
+
+interface CarouselStatePropTypes {
     config: {
         url: string,
         count: number,
@@ -14,7 +43,7 @@ interface CarouselProps {
     outputConf: MovieProps
 }
 
-const Carousel: React.FC<CarouselProps> = ({config, isScrollMax, outputConf}) => {
+const CarouselState: React.FC<CarouselStatePropTypes> = ({config, isScrollMax, outputConf}) => {
     const {api} = useSelector((state: any) => (state));
     const [apiPage, setApiPage] = useState(1);
     const [loaderNext, setLoaderNext] = useState(false);
@@ -45,24 +74,7 @@ const Carousel: React.FC<CarouselProps> = ({config, isScrollMax, outputConf}) =>
         setApiPage(1);
     }, [config, api.guest]);
 
-    return <div className="carousel">
-        <SliderBlock afterChange={afterChange} loaderNext={loaderNext} count={config.count}>
-            {movies.map((elem: any, key: number): any =>
-                <MovieBlock
-                    key={key}
-                    data={elem}
-                    isPoster={outputConf.isPoster}
-                    isSeason={outputConf.isSeason}
-                    {...outputConf.title ? {
-                        title: {
-                            outside: outputConf.title.outside,
-                            view: outputConf.title.view,
-                        }
-                    } : null}
-                />
-            )}
-        </SliderBlock>
-    </div>;
+    return <Carousel afterChange={afterChange} loaderNext={loaderNext} config={config} movies={movies} outputConf={outputConf}/>
 };
 
-export default Carousel;
+export default CarouselState;

@@ -14,11 +14,34 @@ import Registration from "./auth/registration/Registration";
 import Movie from "./movie/Movie";
 import {appChangeSearchInput} from "../store/app/actions";
 
+interface AppPropTypes {
+    search: string;
+}
+
 const defaultAnimation = [
     {opacity: [1, 0]},
 ];
 
-const App: React.FC = () => {
+const App: React.FC<AppPropTypes> = ({search}) => {
+    return <Router>
+        <Layout>
+            <Navbar/>
+            <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route exact path="/movies" component={Movies}/>
+                <Route path="/movies/:id" component={Movie}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/registration" component={Registration}/>
+            </Switch>
+            <FooterBlock/>
+        </Layout>
+        <QueueAnim animConfig={defaultAnimation} duration={300}>
+            {search && search !== '' ? <Search key={1}/> : null}
+        </QueueAnim>
+    </Router>;
+};
+
+const AppState: React.FC = () => {
     const {app} = useSelector((state: any) => (state));
     const dispatch = useDispatch();
 
@@ -36,24 +59,7 @@ const App: React.FC = () => {
         };
     }, [app.search]);
 
-    return <Router>
-        <Layout>
-            <Navbar/>
-            <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route exact path="/movies" component={Movies}/>
-                <Route path="/movies/:id" component={Movie}/>
-                <Route path="/login" component={Login}/>
-                <Route path="/registration" component={Registration}/>
-            </Switch>
-            <FooterBlock/>
-        </Layout>
-        <QueueAnim animConfig={defaultAnimation} duration={300}>
-            {app.search && app.search !== '' ?
-                [<Search key={1}/>]
-                : null}
-        </QueueAnim>
-    </Router>;
+    return <App search={app.search}/>
 };
 
-export default App;
+export default AppState;
