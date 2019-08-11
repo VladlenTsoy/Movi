@@ -47,6 +47,7 @@ const CarouselState: React.FC<CarouselStatePropTypes> = ({config, isScrollMax, o
     const {api} = useSelector((state: any) => (state));
     const [apiPage, setApiPage] = useState(1);
     const [loaderNext, setLoaderNext] = useState(false);
+    const [_config] = useState(config);
     // Current movies
     const [movies, setMovies]: any = useState([]);
 
@@ -68,11 +69,11 @@ const CarouselState: React.FC<CarouselStatePropTypes> = ({config, isScrollMax, o
 
             setLoaderNext(false);
         })();
-    }, [apiPage, config, outputConf.isSeason, api.guest]);
+    }, [apiPage, _config, outputConf.isSeason]);
 
     useEffect(() => {
         setApiPage(1);
-    }, [config, api.guest]);
+    }, [_config]);
 
     return <Carousel afterChange={afterChange} loaderNext={loaderNext} config={config} movies={movies} outputConf={outputConf}/>
 };

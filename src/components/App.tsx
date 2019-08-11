@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {Layout} from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import './App.less';
@@ -12,17 +11,37 @@ import Movies from "./movies/Movies";
 import Login from "./auth/login/Login";
 import Registration from "./auth/registration/Registration";
 import Movie from "./movie/Movie";
-import {appChangeSearchInput} from "../store/app/actions";
-
-interface AppPropTypes {
-    search: string;
-}
 
 const defaultAnimation = [
     {opacity: [1, 0]},
 ];
 
-const App: React.FC<AppPropTypes> = ({search}) => {
+const SearchBlock = () => {
+    const [search, setSearch] = useState();
+
+    useEffect(() => {
+        document.onkeydown = (e: any) => {
+            if (e.keyCode === 27)
+                setSearch('');
+
+            if (e.key.length <= 1 && (!search || search === ''))
+                setSearch(e.key);
+        };
+
+        return () => {
+            document.onkeydown = null
+        };
+    }, [search]);
+
+    const setSearchValue = (val: string) =>
+        setSearch(val);
+
+    return <QueueAnim animConfig={defaultAnimation} duration={300}>
+        {search && search !== '' ? <Search key={1} search={search} setSearch={setSearchValue}/> : null}
+    </QueueAnim>
+};
+
+const App: React.FC = () => {
     return <Router>
         <Layout>
             <Navbar/>
@@ -35,31 +54,7 @@ const App: React.FC<AppPropTypes> = ({search}) => {
             </Switch>
             <FooterBlock/>
         </Layout>
-        <QueueAnim animConfig={defaultAnimation} duration={300}>
-            {search && search !== '' ? <Search key={1}/> : null}
-        </QueueAnim>
+        <SearchBlock/>
     </Router>;
 };
-
-const AppState: React.FC = () => {
-    const {app} = useSelector((state: any) => (state));
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        document.onkeydown = (e: any) => {
-            if (e.keyCode === 27)
-                dispatch(appChangeSearchInput(''));
-
-            if (e.key.length <= 1 && (!app.search || app.search === ''))
-                dispatch(appChangeSearchInput(e.key));
-        };
-
-        return () => {
-            document.onkeydown = null
-        };
-    }, [app.search]);
-
-    return <App search={app.search}/>
-};
-
-export default AppState;
+export default App;
