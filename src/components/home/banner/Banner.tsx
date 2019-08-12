@@ -18,30 +18,31 @@ interface BannerPropTypes {
  * Output movies by 'banner_at'
  */
 const Banner: React.FC<BannerPropTypes> = ({currentData, banners, selectMovie}) => {
-
-
     return <div className="banner-block" key="banner-home-block">
         {/* picture for the background */}
         <BannerImage data={currentData} key={currentData ? currentData.id : 'banner'}/>
 
         {/* output of detailed information */}
-        <QueueAnim type={['bottom', 'top']} className="more">
-            {currentData ? [
-                <div className="info" key={`info-${currentData.id}`}>
-                    <span>Ужасы</span>
-                    <span><Moment format="YYYY">{currentData.release}</Moment></span>
-                    <span>США</span>
-                </div>,
-                <h1 key={`title-${currentData.id}`}>{currentData.title}</h1>,
-                <div className="actions" key={`actions-${currentData.id}`}>
-                    <Button type="primary" size="large">
-                        Смотреть
-                        <FontAwesomeIcon icon="play"/>
-                    </Button>
-                    <Button ghost size="large">+ Плейлист</Button>
-                </div>
-            ] : null}
-        </QueueAnim>
+        <div className="more">
+            <QueueAnim type={['bottom', 'top']} className="wrapper-info">
+                {currentData ? [
+                    <div className="info" key={`info-${currentData.id}`}>
+                        <span>Ужасы</span>
+                        <span><Moment format="YYYY">{currentData.release}</Moment></span>
+                        <span>США</span>
+                    </div>,
+                    <h1 key={`title-${currentData.id}`}>{currentData.title}</h1>,
+
+                ] : null}
+            </QueueAnim>
+            <div className="actions" key={`actions-${currentData ? currentData.id : 1}`}>
+                <Button type="primary" size="large" loading={!currentData}>
+                    Смотреть
+                    <FontAwesomeIcon icon="play"/>
+                </Button>
+                <Button ghost size="large" icon="plus" loading={!currentData}>Плейлист</Button>
+            </div>
+        </div>
 
         {/* output five movies for banner */}
         <div className="carousel" key="banner-carousel">
@@ -58,7 +59,7 @@ const Banner: React.FC<BannerPropTypes> = ({currentData, banners, selectMovie}) 
     </div>
 };
 
-const BannerState:React.FC = () => {
+const BannerState: React.FC = () => {
     const {api} = useSelector((state: any) => (state));
     const [url] = useState(`/trending/movie/day?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
     const [banners, setMovies]: any = useState([]);

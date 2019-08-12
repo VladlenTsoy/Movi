@@ -31,5 +31,9 @@ export {
 } from "@ant-design/icons/lib/fill/StarFill";
 
 export {
+    default as Plus
+} from "@ant-design/icons/lib/outline/PlusOutline";
+
+export {
     default as SortDescendingOutline
 } from "@ant-design/icons/lib/outline/SortDescendingOutline";

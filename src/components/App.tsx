@@ -11,7 +11,6 @@ import Login from "./auth/login/Login";
 import Registration from "./auth/registration/Registration";
 import Movie from "./movie/Movie";
 
-
 const App: React.FC = () => {
     return <Router>
         <Layout>
