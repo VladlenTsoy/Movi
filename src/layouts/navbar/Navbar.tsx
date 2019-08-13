@@ -68,7 +68,6 @@ const Navbar: React.FC<any> = ({location, history}: any) => {
                     <Search
                         placeholder="Введите название фильма, сериала или имя актера"
                         value={app.search}
-                        autoFocus={true}
                     />
                 </div>
                 <Menu.Item onClick={onUser} key="/auth/login"

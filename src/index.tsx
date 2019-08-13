@@ -5,13 +5,8 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import {LocaleProvider} from 'antd';
 import ruRU from 'antd/lib/locale-provider/ru_RU';
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {faPlay} from '@fortawesome/free-solid-svg-icons'
-import {fab, faTelegram} from '@fortawesome/free-brands-svg-icons'
 import {store} from "./store/rootReducer";
 import {Provider} from "react-redux";
-
-library.add(fab, faTelegram, faPlay);
 
 ReactDOM.render(<LocaleProvider locale={ruRU}>
     <Provider store={store}>

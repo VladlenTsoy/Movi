@@ -1,0 +1,97 @@
+.playlist-block {
+  .ant-modal-content {
+    background: #0E0D12;
+
+    .ant-modal-header {
+      border: 0;
+      background: #0E0D12;
+
+      .ant-modal-title {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    .ant-modal-body {
+      padding: 0;
+      background: #121318;
+      cursor: pointer;
+
+
+      .ant-list-item {
+        padding: 12px 16px;
+        border-bottom: 1px solid #0E0D12;
+
+        .ant-list-item-meta {
+          align-items: center;
+
+          .ant-list-item-meta-avatar {
+            display: flex;
+            align-items: center;
+
+            svg {
+              height: 20px;
+              width: 20px;
+              color: rgba(255, 255, 255, 0.4);
+            }
+          }
+
+          .ant-list-item-meta-title {
+            color: #ffffff;
+          }
+
+          .ant-list-item-meta-description {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+          }
+        }
+
+        &:hover {
+          background: #0E0D12;
+        }
+
+        &:last-child {
+          //border-bottom: none;
+        }
+      }
+
+      .create-playlist {
+        display: flex;
+        padding: 12px 16px;
+
+        i {
+          font-size: 20px;
+          margin-right: 16px;
+          color: rgba(255, 255, 255, 0.4);
+        }
+
+        .title {
+          color: #ffffff;
+        }
+
+        &:hover {
+          background: #0E0D12;
+        }
+      }
+    }
+
+    .ant-spin{
+      i{
+        font-size: 24px ;
+      }
+    }
+  }
+}
+
+
+.ant-notification-notice{
+  background: #0E0D12;
+  color: rgba(255, 255, 255, 0.4);
+
+  .ant-notification-notice-close{
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .ant-notification-notice-message{
+    color: #ffffff;
+  }
+}

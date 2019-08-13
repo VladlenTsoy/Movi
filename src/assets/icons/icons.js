@@ -35,5 +35,13 @@ export {
 } from "@ant-design/icons/lib/outline/PlusOutline";
 
 export {
+    default as Close
+} from "@ant-design/icons/lib/outline/CloseOutline";
+
+export {
     default as SortDescendingOutline
 } from "@ant-design/icons/lib/outline/SortDescendingOutline";
+
+export {
+    default as CheckCircleOutline
+} from "@ant-design/icons/lib/outline/CheckCircleOutline";
