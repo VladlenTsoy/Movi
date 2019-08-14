@@ -5,11 +5,12 @@ import QueueAnim from 'rc-queue-anim';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import PosterBlock from "../../../layouts/blocks/poster/Poster";
 import Moment from "react-moment";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import BannerImage from "./banner-image/BannerImage";
 import {RouteComponentProps, withRouter} from "react-router";
-import PlaylistModal from "../../../layouts/modals/playlist/Playlist";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faBookmark} from "@fortawesome/free-regular-svg-icons";
+import {userAddWillWatch} from "../../../store/user/actions";
 
 // Your component own properties
 type BannerPropTypes = RouteComponentProps & {
@@ -17,25 +18,17 @@ type BannerPropTypes = RouteComponentProps & {
     banners: any;
     history: any;
     selectMovie: any;
+    addSeeLater: any;
 }
 
 /**
  * Output movies by 'banner_at'
  */
-const Banner: React.FC<BannerPropTypes> = ({currentData, banners, selectMovie, history}) => {
-    const [visiblePlaylistModal, setVisiblePlaylistModal] = useState(false);
-
+const Banner: React.FC<BannerPropTypes> = ({currentData, banners, selectMovie, history, addSeeLater}) => {
     const goToView = (id: string) => {
         history.push(`/movies/${id}`);
     };
 
-    const listingPlaylist = () => {
-        setVisiblePlaylistModal(true);
-    };
-
-    const closePlaylist = () => {
-        setVisiblePlaylistModal(false);
-    };
 
     return <div className="banner-block" key="banner-home-block">
         {/* picture for the background */}
@@ -58,10 +51,13 @@ const Banner: React.FC<BannerPropTypes> = ({currentData, banners, selectMovie, h
                     Смотреть
                     {currentData ? <FontAwesomeIcon icon={faPlay}/> : null}
                 </Button>
-                <Button ghost size="large" icon="plus" loading={!currentData} onClick={() => listingPlaylist()}>Плейлист</Button>
+                <Button className="willWatch" ghost size="large" loading={!currentData}
+                        onClick={() => addSeeLater(currentData.id)}>
+                    {currentData ? <FontAwesomeIcon icon={faBookmark}/> : null}
+                    Буду смотреть
+                </Button>
             </div>
         </div>
-        <PlaylistModal visible={visiblePlaylistModal} close={closePlaylist}/>
 
         {/* output five movies for banner */}
         <div className="carousel" key="banner-carousel">
@@ -85,6 +81,7 @@ const BannerState: React.FC = () => {
     const [url] = useState(`/trending/movie/day?api_key=ac98cb53e0760e1f61d042006ba12afa&language=ru`);
     const [banners, setBanners]: any = useState([]);
     const [currentData, setCurrentData]: any = useState(null);
+    const dispatch = useDispatch();
 
     const selectMovie = (e: any) => {
         const {key} = e.currentTarget.dataset;
@@ -104,7 +101,11 @@ const BannerState: React.FC = () => {
         })();
     }, [url, api.guest]);
 
-    return <RouterBanner banners={banners} currentData={currentData} selectMovie={selectMovie}/>
+    const addSeeLater = (id: string) => {
+        dispatch(userAddWillWatch(id));
+    };
+
+    return <RouterBanner banners={banners} currentData={currentData} selectMovie={selectMovie} addSeeLater={addSeeLater}/>
 };
 
 export default BannerState;

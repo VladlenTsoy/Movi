@@ -6,8 +6,10 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faImdb} from "@fortawesome/free-brands-svg-icons";
 import {faBookmark} from "@fortawesome/free-regular-svg-icons";
+import {useDispatch} from "react-redux";
+import {userAddWillWatch} from "../../../store/user/actions";
 
-const MoviesPosterBlock: React.FC<any> = ({movie}) => {
+const MoviesPosterBlock: React.FC<any> = ({movie, addSeeLater}) => {
     return <div className="movie-poster-block">
         <div className="poster-block">
             <PosterBlock image={{
@@ -23,15 +25,17 @@ const MoviesPosterBlock: React.FC<any> = ({movie}) => {
                         <Link to={`movies/${movie.id}`} className="title">{movie.title}</Link>
                     </div>
 
-                    <Button type="link" ghost size="small" className="willWatch">
+                    <Button type="link" ghost size="small" className="willWatch" onClick={() => addSeeLater(movie.id)}>
                         <FontAwesomeIcon icon={faBookmark}/>
                         Буду смотреть
                     </Button>
                 </div>
-                <div className="description">
-                    <p>{movie.overview.substr(0, 120)}{movie.overview.length > 120 ? '...' : ''}</p>
-                </div>
             </div>
+
+            <div className="description">
+                <p>{movie.overview.substr(0, 90)}{movie.overview.length > 90 ? '...' : ''}</p>
+            </div>
+
             <div className="reviews">
                 <div className="stars">
                     <div className="wrapper-star">
@@ -49,7 +53,7 @@ const MoviesPosterBlock: React.FC<any> = ({movie}) => {
                     <FontAwesomeIcon icon={faImdb}/>
                     <span className={movie.vote_average > 6.5 ? 'active' : ''}>
                         {movie.vote_average}
-                        <small>{movie.vote_count} голосов</small>
+                        <small>{movie.vote_count}</small>
                     </span>
                 </div>
                 <div className="wrapper-views">
@@ -64,4 +68,14 @@ const MoviesPosterBlock: React.FC<any> = ({movie}) => {
     </div>;
 };
 
-export default MoviesPosterBlock;
+
+const MoviesPosterState: React.FC<any> = ({movie}) => {
+    const dispatch = useDispatch();
+
+    const addSeeLater = (id: string) =>
+        dispatch(userAddWillWatch(id));
+
+    return <MoviesPosterBlock movie={movie} addSeeLater={addSeeLater}/>
+};
+
+export default MoviesPosterState;

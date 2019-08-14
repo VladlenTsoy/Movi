@@ -42,10 +42,10 @@ const Movies: React.FC = () => {
                 <FilterBarBlock/>
                 <div className="wrapper-posters-block">
                     {movies.map((movie: any, key: number) => {
-                        if ((key + 1) % 3)
+                        // if ((key + 1) % 3)
                             return <MoviesPosterBlock movie={movie} key={key}/>;
-                        else
-                            return <div className="line" key={key}/>;
+                        // else
+                        //     return <div className="line" key={key}/>;
                     })}
                 </div>
             </Col>

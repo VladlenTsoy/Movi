@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './Playlist.less';
-import {Modal, List, Icon, Spin, notification} from 'antd';
+import {Modal, List, Icon, Spin} from 'antd';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBookmark, faHeart} from "@fortawesome/free-regular-svg-icons";
 
@@ -16,17 +16,6 @@ const data = [
         description: 'Выбранные вами фильмы',
     },
 ];
-
-const openNotification = () => {
-    notification.success({
-        message: 'Добавлен в "Буду смотреть"',
-        description:
-            'This is the content of the notification.',
-        onClick: () => {
-            console.log('Notification Clicked!');
-        },
-    });
-};
 
 const PlaylistModal: React.FC<any> = ({visible, close}) => {
     const [loading, setLoading] = useState(false);
@@ -55,8 +44,7 @@ const PlaylistModal: React.FC<any> = ({visible, close}) => {
                 itemLayout="horizontal"
                 dataSource={data}
                 renderItem={item => (
-                    <List.Item
-                        onClick={openNotification}>
+                    <List.Item>
                         <List.Item.Meta
                             avatar={item.icon}
                             title={item.title}
