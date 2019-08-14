@@ -45,3 +45,7 @@ export {
 export {
     default as CheckCircleOutline
 } from "@ant-design/icons/lib/outline/CheckCircleOutline";
+
+export {
+    default as CheckOutline
+} from "@ant-design/icons/lib/outline/CheckOutline";

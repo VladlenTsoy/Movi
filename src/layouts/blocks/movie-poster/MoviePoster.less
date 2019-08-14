@@ -5,7 +5,7 @@
   grid-auto-flow: row;
   transition: all 0.2s ease-in-out;
 
-  &:hover{
+  &:hover {
     background: #192c3e;
   }
 
@@ -29,7 +29,6 @@
       .header-title {
         display: flex;
         justify-content: space-between;
-        align-items: center;
 
         .genres-title {
           .genres {
@@ -52,16 +51,29 @@
           }
         }
 
-        .willWatch{
+        .will-watch {
           color: @text-secondary;
           margin-left: 5px;
 
-          svg{
-            margin-right: 7px;
+          svg {
+            margin-right: 8px;
           }
 
-          &:hover{
+          .anticon{
+            svg{
+              margin-right: 0;
+            }
+          }
+
+          &:hover {
             color: @primary-color;
+          }
+
+          &.active{
+            color: @primary-color;
+            //color: rgba(255, 255, 255, 0.7);
+            border: 0;
+            //background: rgba(36, 186, 239, 0.2);
           }
         }
       }
@@ -72,6 +84,7 @@
     .description {
       color: rgba(255, 255, 255, 0.6);
       margin-bottom: 0.5rem;
+
       p {
         margin: 0;
         display: block; /* Fallback for non-webkit */
@@ -165,7 +178,7 @@
           font-weight: bolder;
           font-size: 20px;
 
-          small{
+          small {
             color: @text-secondary;
             font-weight: normal;
             display: block;
@@ -179,4 +192,32 @@
       }
     }
   }
+}
+
+
+.movie-more-modal{
+    .ant-modal-content {
+      background: #0E0D12;
+
+      .ant-modal-header {
+        border: 0;
+        background: #0E0D12;
+
+        .ant-modal-title {
+          color: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      .ant-modal-body {
+        background: #121318;
+        cursor: pointer;
+        color: @text-color;
+      }
+
+      .ant-spin{
+        i{
+          font-size: 24px ;
+        }
+      }
+    }
 }

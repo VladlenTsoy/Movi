@@ -29,15 +29,19 @@
       padding: 1rem 1rem 1rem 1rem;
     }
 
-    & > div:not(:nth-child(2n)) {
+    & > div:not(.active):not(:nth-child(2n)) {
       border-right: 1px solid rgba(255, 255, 255, 0.1);
       //padding: 1rem 1rem 1rem 0;
     }
 
-    .line {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    .active{
+        grid-column-start: 1;
+        grid-column-end: 3;
     }
+    //.line {
+    //  grid-column-start: 1;
+    //  grid-column-end: 3;
+    //  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    //}
   }
 }
