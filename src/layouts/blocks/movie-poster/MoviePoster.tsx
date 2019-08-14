@@ -1,8 +1,11 @@
 import React from "react";
 import './MoviePoster.less'
 import PosterBlock from "../poster/Poster";
-import {Icon} from "antd";
+import {Icon, Button} from "antd";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faImdb} from "@fortawesome/free-brands-svg-icons";
+import {faBookmark} from "@fortawesome/free-regular-svg-icons";
 
 const MoviesPosterBlock: React.FC<any> = ({movie}) => {
     return <div className="movie-poster-block">
@@ -13,9 +16,22 @@ const MoviesPosterBlock: React.FC<any> = ({movie}) => {
             }}/>
         </div>
         <div className="info-block">
-            <span className="genres">Action, 2019</span>
-            <Link to={`movies/${movie.id}`} className="title">{movie.title}</Link>
-            <span className="description">{movie.overview}</span>
+            <div className="header-block">
+                <div className="header-title">
+                    <div className="genres-title">
+                        <span className="genres">Action, 2019</span>
+                        <Link to={`movies/${movie.id}`} className="title">{movie.title}</Link>
+                    </div>
+
+                    <Button type="link" ghost size="small" className="willWatch">
+                        <FontAwesomeIcon icon={faBookmark}/>
+                        Буду смотреть
+                    </Button>
+                </div>
+                <div className="description">
+                    <p>{movie.overview.substr(0, 120)}{movie.overview.length > 120 ? '...' : ''}</p>
+                </div>
+            </div>
             <div className="reviews">
                 <div className="stars">
                     <div className="wrapper-star">
@@ -29,9 +45,19 @@ const MoviesPosterBlock: React.FC<any> = ({movie}) => {
                         </div>
                     </div>
                 </div>
-                <div className="views">
+                <div className="wrapper-imdb">
+                    <FontAwesomeIcon icon={faImdb}/>
+                    <span className={movie.vote_average > 6.5 ? 'active' : ''}>
+                        {movie.vote_average}
+                        <small>{movie.vote_count} голосов</small>
+                    </span>
+                </div>
+                <div className="wrapper-views">
                     <Icon type="eye"/>
-                    <span>{movie.popularity} Просмотров</span>
+                    <div className="views">
+                        <span>{movie.popularity} Просмотров</span>
+                        {/*<span>Просмотров</span>*/}
+                    </div>
                 </div>
             </div>
         </div>

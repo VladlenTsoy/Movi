@@ -1,0 +1,34 @@
+.wrapper-movies-filter-block {
+  margin-bottom: 2rem;
+
+  .movies-filter {
+    display: flex;
+    justify-content: space-between;
+
+    .movies-filter-checkbox {
+      .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+        margin-left: 15px;
+      }
+
+      label {
+        display: inline;
+      }
+    }
+
+    .movies-filter-dropdown {
+      display: flex;
+
+      .ant-dropdown-link {
+        color: #B4BBBF;
+
+        &.ant-dropdown-open, &:hover {
+          color: @primary-color;
+        }
+      }
+
+      .ant-dropdown-link:not(:last-child) {
+        margin-right: 1.5rem;
+      }
+    }
+  }
+}

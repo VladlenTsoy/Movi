@@ -1,6 +1,6 @@
 .movie-poster-block {
   display: grid;
-  grid-template-columns: 1.5fr 5fr;
+  grid-template-columns: 1fr 5fr;
   grid-gap: 1rem;
   grid-auto-flow: row;
   //margin-bottom: 1rem;
@@ -13,42 +13,85 @@
   }
 
   .poster-block {
-
+    cursor: pointer;
   }
 
   .info-block {
     width: 100%;
     overflow: hidden;
     padding-right: 1rem;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
 
     & > span {
       width: 100%;
       display: block;
     }
 
-    .genres {
-      color: @text-secondary;
-      margin-bottom: 0.25rem;
-      font-size: 12px;
-    }
+    .header-block {
+      .header-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-    .title {
-      color: #ffffff;
-      font-weight: bolder;
-      margin-bottom: 0.75rem;
-    }
+        .genres-title {
+          .genres {
+            display: block;
+            color: @text-secondary;
+            //margin-bottom: 0.25rem;
+            margin-bottom: 0.05rem;
+            font-size: 12px;
+          }
 
-    .description {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: @text-secondary;
-      margin-bottom: 0.5rem;
+          .title {
+            display: block;
+            color: #ffffff;
+            font-weight: bolder;
+            //margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 16px;
+
+            &:hover {
+              color: @primary-color;
+            }
+          }
+        }
+
+        .willWatch{
+          color: @text-secondary;
+          margin-left: 5px;
+
+          svg{
+            margin-right: 7px;
+          }
+
+          &:hover{
+            color: @primary-color;
+          }
+        }
+      }
+
+      .description {
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.5rem;
+        //height: 60px;
+
+        p {
+          margin: 0;
+          display: block; /* Fallback for non-webkit */
+          line-height: 1.4;
+          //white-space: nowrap;
+          //overflow: hidden;
+          //text-overflow: ellipsis;
+        }
+      }
     }
 
     .reviews {
       display: flex;
       align-self: center;
+      width: 100%;
 
       .stars {
         display: flex;
@@ -94,7 +137,7 @@
         }
       }
 
-      .views {
+      .wrapper-views {
         display: flex;
         color: @text-secondary;
         align-items: center;
@@ -104,10 +147,40 @@
           margin-right: 0.5rem;
         }
 
+        .views {
+          span {
+            font-size: 12px;
+            text-align: center;
+          }
+        }
+      }
+
+      .wrapper-imdb {
+        display: flex;
+        color: @text-secondary;
+        align-items: center;
+        margin-right: 1.5rem;
+        text-align: center;
+
+        svg {
+          margin-right: 0.5rem;
+          font-size: 40px;
+        }
+
         span {
-          font-size: 12px;
-          display: block;
-          text-align: center;
+          font-weight: bolder;
+          font-size: 20px;
+
+          small{
+            color: @text-secondary;
+            font-weight: normal;
+            display: block;
+            font-size: 10px;
+          }
+        }
+
+        span.active {
+          color: @primary-color
         }
       }
     }
