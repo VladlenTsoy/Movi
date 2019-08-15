@@ -18,7 +18,8 @@ const App: React.FC = () => {
             <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/movies" component={Movies}/>
-                <Route path="/movies/:id" component={Movie}/>
+                <Route exact path="/movies/:page" component={Movies}/>
+                <Route path="/movie/:id" component={Movie}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/registration" component={Registration}/>
             </Switch>

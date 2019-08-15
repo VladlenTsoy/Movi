@@ -49,3 +49,11 @@ export {
 export {
     default as CheckOutline
 } from "@ant-design/icons/lib/outline/CheckOutline";
+
+export {
+    default as DoubleLeftOutline
+} from "@ant-design/icons/lib/outline/DoubleLeftOutline";
+
+export {
+    default as DoubleRightOutline
+} from "@ant-design/icons/lib/outline/DoubleRightOutline";

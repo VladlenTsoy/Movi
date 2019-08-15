@@ -37,7 +37,7 @@ const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLa
                 <div className="header-title">
                     <div className="genres-title">
                         <span className="genres">Action, 2019</span>
-                        <Link to={`movies/${movie.id}`} className="title">{movie.title}</Link>
+                        <Link to={`/movie/${movie.id}`} className="title">{movie.title}</Link>
                     </div>
 
                     <Button type="link"

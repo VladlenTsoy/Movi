@@ -15,6 +15,8 @@ module.exports = override(
             '@text-color-secondary': 'rgba(255, 255, 255, 0.4)',
             '@text-color': 'rgba(255, 255, 255, 0.6)',
 
+            // '@body-background': '#131722',
+            // '@component-background': '#0E0D12',
 
             '@bg-empty-color': '#292b33',
             '@text-secondary': 'rgba(255, 255, 255, 0.4)',

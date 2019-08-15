@@ -11,11 +11,18 @@ const menu = (
     </Menu>
 );
 
-const FilterBarBlock: React.FC = () => {
+const FilterBarBlock: React.FC<any> = ({changeSortBy}) => {
+    const changeSort = (e: any) => {
+        if (e.target.checked)
+            changeSortBy('primary_release_date.desc');
+        else
+            changeSortBy('popularity.desc');
+    };
+
     return <div className="wrapper-movies-filter-block">
         <div className="movies-filter">
             <div className="movies-filter-checkbox">
-                <Checkbox>Новинки</Checkbox>
+                <Checkbox onChange={changeSort}>Новинки</Checkbox>
                 <Checkbox>Бесплатные</Checkbox>
                 <Checkbox>4K - Разрешение</Checkbox>
             </div>
