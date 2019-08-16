@@ -1,0 +1,49 @@
+.sound-block {
+  background: #1D212D;
+  padding: 1rem;
+
+  .ant-checkbox-group {
+    display: flex;
+
+    .ant-checkbox-group-item {
+      &:not(:last-child){
+        margin-right: 5px;
+      }
+
+      .item-sound {
+        padding: 0.5rem 0;
+        text-align: center;
+        background: #383C48;
+        transition: all 0.3s ease-in-out;
+
+        svg {
+          font-size: 30px;
+          margin-bottom: 0.1rem;
+        }
+
+        span {
+          color: inherit;
+          font-weight: bold;
+          display: block;
+          font-size: 10px;
+          text-transform: uppercase;
+        }
+      }
+
+      &.ant-checkbox-wrapper-checked {
+        .item-sound {
+          color: #191D29;
+          background: @primary-color;
+        }
+      }
+
+      .ant-checkbox {
+        display: none;
+      }
+
+      .ant-checkbox-wrapper + span, .ant-checkbox + span{
+        padding: 0;
+      }
+    }
+  }
+}

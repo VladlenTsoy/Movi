@@ -7,20 +7,22 @@ import Breadcrumb from "../../layouts/breadcrumb/Breadcrumb";
 import {useSelector} from "react-redux";
 import FilterBarBlock from "./filter-bar/FilterBar";
 import Years from "./filter/years/Years";
+import Sound from "./filter/sound/Sound";
 
-const Movies: React.FC<any> = ({data, page, loading, changeSortBy, changeGenres, changePagination, changeYear}) => {
+const Movies: React.FC<any> = ({data, page, showBy, loading, changeSortBy, changeIsNew, changeShowBy, changeGenres, changePagination, changeYear}) => {
     return <div className="movies">
         <Breadcrumb/>
         <Row>
             <Col span={6}>
                 <Genres changeGenres={changeGenres}/>
+                <Sound/>
                 <Years changeYear={changeYear}/>
             </Col>
             <Col span={18} className="wrapper-movies-block">
                 <div className="title-block">
                     <div className="title">Фильмы</div>
                 </div>
-                <FilterBarBlock changeSortBy={changeSortBy}/>
+                <FilterBarBlock changeSortBy={changeSortBy} changeShowBy={changeShowBy} changeIsNew={changeIsNew}/>
 
                 {loading ?
                     <div className="loading-block">
@@ -37,7 +39,7 @@ const Movies: React.FC<any> = ({data, page, loading, changeSortBy, changeGenres,
                     <Pagination
                         defaultCurrent={Number(page)}
                         current={Number(page)}
-                        defaultPageSize={20}
+                        defaultPageSize={Number(showBy)}
                         total={data ? data.total_results : 0}
                         onChange={changePagination}/>
                 </div>
@@ -51,7 +53,9 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
     const [apiPage, setApiPage] = useState(match.params.page || 1);
     const [data, setData]: any = useState(null);
     const [loading, setLoading]: any = useState(false);
+    const [isNew, setIsNew]: any = useState(false);
     const [sortBy, setSortBy] = useState('popularity.desc');
+    const [showBy, setShowBy] = useState(20);
     const [genres, setGenres]: any = useState([]);
     const [year, setYear]: any = useState({gte: '', lte: ''});
 
@@ -63,6 +67,8 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
 
             let response = await api.guest.get(`/discover/movie`, {
                 params: {
+                    primary_release_year: isNew ? new Date().getFullYear() : '',
+                    show_by: showBy,
                     sort_by: sortBy,
                     'primary_release_date.gte': year.gte,
                     'primary_release_date.lte': year.lte,
@@ -76,7 +82,7 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
             setData(response.data);
             setLoading(false);
         })();
-    }, [apiPage, sortBy, genres, year]);
+    }, [apiPage, sortBy, genres, year, showBy, isNew]);
 
     const changePagination = (page: any) => {
         setApiPage(page);
@@ -115,13 +121,24 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
         }
     };
 
+    const changeShowBy = (counts: number) => {
+        setShowBy(counts);
+    };
+
+    const changeIsNew = (state: boolean) => {
+        setIsNew(state);
+    };
+
     return <Movies
         data={data}
         page={apiPage}
         loading={loading}
+        showBy={showBy}
         changePagination={changePagination}
         changeGenres={changeGenres}
+        changeIsNew={changeIsNew}
         changeYear={changeYear}
+        changeShowBy={changeShowBy}
         changeSortBy={changeSortBy}/>
 };
 

@@ -15,20 +15,52 @@
       }
     }
 
-    .movies-filter-dropdown {
+    .movies-filter-selects {
       display: flex;
 
-      .ant-dropdown-link {
-        color: #B4BBBF;
+      .ant-select-selection {
+        background: none;
+        border: none;
+        max-width: 220px;
+        width: 100%;
+        outline: none;
+        box-shadow: none;
+        line-height: normal;
+        height: auto;
 
-        &.ant-dropdown-open, &:hover {
-          color: @primary-color;
+        &:first-child {
+          margin-right: 0.5rem;
+        }
+
+        .ant-select-selection__rendered {
+          height: auto;
+
+          .ant-select-selection-selected-value {
+            float: right;
+          }
+        }
+
+        .ant-select-arrow {
+          color: inherit;
         }
       }
+    }
+  }
+}
 
-      .ant-dropdown-link:not(:last-child) {
-        margin-right: 1.5rem;
-      }
+.ant-select-dropdown {
+  background: #1D212D;
+
+  .ant-select-dropdown-menu-item {
+
+    &:hover {
+      background: none;
+      color: @primary-color;
+    }
+
+    &.ant-select-dropdown-menu-item-selected {
+      background: @primary-color;
+      color: #ffffff;
     }
   }
 }
