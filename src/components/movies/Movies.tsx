@@ -6,13 +6,15 @@ import MoviesPosterBlock from "../../layouts/blocks/movie-poster/MoviePoster";
 import Breadcrumb from "../../layouts/breadcrumb/Breadcrumb";
 import {useSelector} from "react-redux";
 import FilterBarBlock from "./filter-bar/FilterBar";
+import Years from "./filter/years/Years";
 
-const Movies: React.FC<any> = ({data, page, loading, changeSortBy, changeGenres, changePagination}) => {
+const Movies: React.FC<any> = ({data, page, loading, changeSortBy, changeGenres, changePagination, changeYear}) => {
     return <div className="movies">
         <Breadcrumb/>
         <Row>
             <Col span={6}>
                 <Genres changeGenres={changeGenres}/>
+                <Years changeYear={changeYear}/>
             </Col>
             <Col span={18} className="wrapper-movies-block">
                 <div className="title-block">
@@ -51,6 +53,7 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
     const [loading, setLoading]: any = useState(false);
     const [sortBy, setSortBy] = useState('popularity.desc');
     const [genres, setGenres]: any = useState([]);
+    const [year, setYear]: any = useState({gte: '', lte: ''});
 
     useEffect(() => {
         (async () => {
@@ -61,6 +64,8 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
             let response = await api.guest.get(`/discover/movie`, {
                 params: {
                     sort_by: sortBy,
+                    'primary_release_date.gte': year.gte,
+                    'primary_release_date.lte': year.lte,
                     api_key: 'ac98cb53e0760e1f61d042006ba12afa',
                     language: 'ru',
                     page: apiPage,
@@ -71,18 +76,18 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
             setData(response.data);
             setLoading(false);
         })();
-    }, [apiPage, sortBy, genres]);
+    }, [apiPage, sortBy, genres, year]);
 
-    const changePagination = async (page: any) => {
+    const changePagination = (page: any) => {
         setApiPage(page);
     };
 
-    const changeSortBy = async (sort: any) => {
+    const changeSortBy = (sort: any) => {
         setSortBy(sort);
         setApiPage(1);
     };
 
-    const changeGenres = async (genre: any, state: boolean) => {
+    const changeGenres = (genre: any, state: boolean) => {
         let _genres = [];
         if (state)
             _genres = [...genres, genre];
@@ -93,12 +98,30 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
         setApiPage(1);
     };
 
+    const changeYear = (year: any) => {
+        switch (year) {
+            case 'all':
+                return setYear({gte: '', lte: ''});
+            case '2000':
+                return setYear({gte: '2000-01-01', lte: '2010-12-31'});
+            case '1990':
+                return setYear({gte: '1990-01-01', lte: '1999-12-31'});
+            case '1980':
+                return setYear({gte: '1980-01-01', lte: '1989-12-31'});
+            case '80':
+                return setYear({gte: '', lte: '1979-12-31'});
+            default:
+                return setYear({gte: `${year}-01-01`, lte: `${year}-12-31`});
+        }
+    };
+
     return <Movies
         data={data}
         page={apiPage}
         loading={loading}
         changePagination={changePagination}
         changeGenres={changeGenres}
+        changeYear={changeYear}
         changeSortBy={changeSortBy}/>
 };
 

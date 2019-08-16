@@ -8,6 +8,7 @@ import {faImdb} from "@fortawesome/free-brands-svg-icons";
 import {faBookmark} from "@fortawesome/free-regular-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {userAddWillWatch, userRemoveWillWatch} from "../../../store/user/actions";
+import moment from 'moment';
 
 const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLater}) => {
     const [visible, setVisible] = useState(false);
@@ -36,7 +37,7 @@ const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLa
             <div className="header-block">
                 <div className="header-title">
                     <div className="genres-title">
-                        <span className="genres">Action, 2019</span>
+                        <span className="genres">Action, {moment(movie.release_date).format('YYYY')}</span>
                         <Link to={`/movie/${movie.id}`} className="title">{movie.title}</Link>
                     </div>
 

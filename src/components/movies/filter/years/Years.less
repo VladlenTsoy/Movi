@@ -1,0 +1,50 @@
+.filter-years {
+  background: #1D212D;
+  padding: 1rem;
+
+  .title-block {
+    .title {
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .wrapper-years {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+    grid-auto-flow: row;
+
+    .year {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      text-align: center;
+      background: #191D29;
+      color: @primary-color;
+      font-weight: 600;
+      border: 0;
+      border-radius: 0;
+
+      &::before{
+        content: none;
+      }
+
+      &:hover {
+        color: #191D29;
+        background: @primary-color;
+      }
+
+      &.ant-radio-button-wrapper-checked {
+        color: #191D29;
+        background: @primary-color;
+      }
+    }
+  }
+}
