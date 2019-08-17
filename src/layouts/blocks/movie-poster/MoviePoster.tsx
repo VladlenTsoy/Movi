@@ -1,14 +1,16 @@
 import React, {useState} from "react";
 import './MoviePoster.less'
 import PosterBlock from "../poster/Poster";
-import {Icon, Button, Modal} from "antd";
 import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faImdb} from "@fortawesome/free-brands-svg-icons";
-import {faBookmark} from "@fortawesome/free-regular-svg-icons";
 import {useDispatch, useSelector} from "react-redux";
 import {userAddWillWatch, userRemoveWillWatch} from "../../../store/user/actions";
 import moment from 'moment';
+
+import MoreModal from "./more-modal/MoreModal";
+import Imdb from "../votes/imdb/Imdb";
+import ButtonWillWatch from "../../components/will-watch/willWatch";
+import Views from "../votes/views/Views";
+import Stars from "../votes/stars/Stars";
 
 const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLater}) => {
     const [visible, setVisible] = useState(false);
@@ -26,6 +28,10 @@ const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLa
         setLaterLoading(false);
     };
 
+    const closeMoreModal = () => {
+        setVisible(false);
+    };
+
     return <div className="movie-poster-block">
         <div className="poster-block">
             <PosterBlock image={{
@@ -41,16 +47,7 @@ const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLa
                         <Link to={`/movie/${movie.id}`} className="title">{movie.title}</Link>
                     </div>
 
-                    <Button type="link"
-                            size="small"
-                            loading={laterLoading}
-                            className={`will-watch ${isWillWatch ? 'active' : ''}`}
-                            onClick={sendIdToSeeLater}>
-                        {laterLoading ? null : isWillWatch ?
-                            <Icon type="check"/> :
-                            <FontAwesomeIcon icon={faBookmark}/>}
-                        Буду смотреть
-                    </Button>
+                    <ButtonWillWatch loading={laterLoading} sendIdToSeeLater={sendIdToSeeLater} isWillWatch={isWillWatch}/>
                 </div>
             </div>
 
@@ -59,47 +56,19 @@ const MoviesPosterBlock: React.FC<any> = ({user, movie, addSeeLater, removeSeeLa
             </div>
 
             <div className="reviews">
-                <div className="stars">
-                    <div className="wrapper-star">
-                        <Icon type="star" theme="filled"/>
-                        <span className="assessment">{movie.vote_average}</span>
-                    </div>
-                    <div className="wrapper-votes">
-                        <div className="votes">
-                            <span>{movie.vote_count}</span>
-                            <span>голосов</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="wrapper-imdb">
-                    <FontAwesomeIcon icon={faImdb}/>
-                    <span className={movie.vote_average > 6.5 ? 'active' : ''}>
-                        {movie.vote_average}
-                        <small>{movie.vote_count}</small>
-                    </span>
-                </div>
-                <div className="wrapper-views">
-                    <Icon type="eye"/>
-                    <div className="views">
-                        <span>{movie.popularity} Просмотров</span>
-                        {/*<span>Просмотров</span>*/}
-                    </div>
-                </div>
+                <Stars average={movie.vote_average} count={movie.vote_count}/>
+                <Imdb average={movie.vote_average} count={movie.vote_count}/>
+                <Views popularity={movie.popularity}/>
             </div>
         </div>
-        <Modal
-            className="movie-more-modal"
-            title="Vertically centered modal dialog"
-            centered
-            closable={false}
-            footer={null}
+        <MoreModal
+            key={movie.id}
+            movie={movie}
+            laterLoading={laterLoading}
+            sendIdToSeeLater={sendIdToSeeLater}
+            isWillWatch={isWillWatch}
             visible={visible}
-            onCancel={() => setVisible(false)}
-        >
-            <p>some contents...</p>
-            <p>some contents...</p>
-            <p>some contents...</p>
-        </Modal>
+            closeMoreModal={closeMoreModal}/>
     </div>;
 };
 

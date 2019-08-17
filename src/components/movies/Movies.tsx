@@ -65,6 +65,8 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
             window.scrollTo(0, 0);
             history.push(`/movies/${apiPage}`);
 
+            console.log(apiPage,match.params.page, apiPage === match.params.page);
+
             let response = await api.guest.get(`/discover/movie`, {
                 params: {
                     primary_release_year: isNew ? new Date().getFullYear() : '',
@@ -83,6 +85,10 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
             setLoading(false);
         })();
     }, [apiPage, sortBy, genres, year, showBy, isNew]);
+
+    // useEffect(() => {
+    //     setApiPage(Number(match.params.page));
+    // }, [match.params.page]);
 
     const changePagination = (page: any) => {
         setApiPage(page);
@@ -123,10 +129,12 @@ const MoviesState: React.FC<any> = ({history, match}: any) => {
 
     const changeShowBy = (counts: number) => {
         setShowBy(counts);
+        setApiPage(1);
     };
 
     const changeIsNew = (state: boolean) => {
         setIsNew(state);
+        setApiPage(1);
     };
 
     return <Movies
