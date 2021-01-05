@@ -17,7 +17,7 @@
     "@types/react-router-dom": "^4.3.3",
     "animate.css": "^3.7.2",
     "antd": "^3.18.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.11.2",
     "babel-plugin-relay": "^4.0.0",
     "customize-cra": "^0.2.12",
